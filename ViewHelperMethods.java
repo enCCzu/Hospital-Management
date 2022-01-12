@@ -4,27 +4,37 @@ import java.awt.*;
 
 abstract class ViewHelperMethods {
     
-    protected void refreshFrame(){
+    protected void refreshFrame(JFrame frame){
 
-
-
-    }
-
-    protected void refreshPanel(){
-
-
+        frame.repaint();
+        frame.revalidate();
 
     }
 
-    protected void deconstructPanel(){
+    protected void refreshPanel(JPanel panel){
 
+        panel.repaint();
+        panel.revalidate();
 
     }
 
-    protected void makeFrame(){
+    protected void deconstructPanel(JFrame frame, JPanel panel){
 
+        frame.remove(panel);
 
-        
+        refreshFrame(frame);
+
+    }
+
+    protected JFrame makeFrame(){
+
+        JFrame frame = new JFrame("Covidcaptor Sakura"); 
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000, 800); // or frame.pack();
+
+        // add frame.setVisible(true); somewhere later in the code 
+
+        return frame;
     }
 
 }
