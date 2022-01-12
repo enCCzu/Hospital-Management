@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 class testingCode{
     public static void main(String[] args){
+        //ArrayList
         ArrayList<String[]> patientTable = new ArrayList<String[]>();
         String[] patient1 = {"Annie", "00004", "7", "1/1//22", "4", "Status", "Diagnosis", "Attending Staff"};
         String[] patient2 = {"Ashe", "00005", "23", "1/1//22", "5", "Status", "Diagnosis", "Attending Staff"};
@@ -12,9 +13,11 @@ class testingCode{
         patientTable.add(patient3);
         patientTable.add(patient4);
         patientTable.add(patient5);
-
+        
+        //Table Column Names
         String[] columnNames = {"Name", "Patient ID", "Age", "Check-in Date", "Room #", "Status", "Diagnosis", "Attending Staff"};
-
+        
+        //Two ways to turn to 2D array
         Object[][] patientTableArray = patientTable.toArray(new Object[patientTable.size()][]);
 
         // String[][] patientTableArray = new String[patientTable.size()][columnNames.length];
