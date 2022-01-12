@@ -5,4 +5,7 @@ class View extends AbstractView {
     Patient patientPanel = new Patient();
     Sidebar sidebarPanel = new Sidebar();
     Controller controller = new Controller();
+    public View(){
+        
+    }
 }
