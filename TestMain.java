@@ -8,6 +8,8 @@ public class TestMain extends ViewHelperMethods{
 
         JFrame frame = makeFrame();
 
+        frame.getContentPane().add(new LoginPanel(frame));
+
         frame.setVisible(true);
 
     }

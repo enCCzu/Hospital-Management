@@ -1,17 +1,20 @@
 import javax.swing.*;
-
+import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.event.*;
 
 public class SidePanel extends JPanel{
 
-    public SidePanel(){
+    public SidePanel(JFrame frame){
 
-        setPreferredSize(null);
+        Dimension panelSize = new Dimension(200, 800);
+        setPreferredSize(panelSize);
+        setMinimumSize(panelSize);
+        setMaximumSize(panelSize);
 
         setBackground(Color.PINK);
 
-        ActionListener actionListener = new TestActionListener(this);
+        ActionListener actionListener = new TestActionListener(frame, this);
 
         //  Top Label
         JLabel logoLabel = new JLabel("CovidCaptur Sakura"); 
@@ -19,6 +22,9 @@ public class SidePanel extends JPanel{
         // Tab Buttons
         JButton patientButton = new JButton("Patient"); 
         JButton roomsButton = new JButton("Rooms"); 
+        add(logoLabel);
+        add(patientButton);
+        add(roomsButton);
 
         //Action Listener for buttons
         patientButton.setActionCommand("Patient Tab");

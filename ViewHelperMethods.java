@@ -1,5 +1,6 @@
 import javax.swing.*; 
 import java.awt.*;
+import java.util.Optional; 
 
 
 abstract class ViewHelperMethods {
@@ -31,6 +32,7 @@ abstract class ViewHelperMethods {
         JFrame frame = new JFrame("Covidcaptor Sakura"); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 800); // or frame.pack();
+        frame.setResizable(false);
 
         // add frame.setVisible(true); somewhere later in the code 
 

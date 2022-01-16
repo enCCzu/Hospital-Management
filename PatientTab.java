@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PatientTab extends JPanel{
-    JPanel patientPanel = new JPanel();
-
     //Top Label of Tab
     JLabel titleLabel = new JLabel("Patients", JLabel.RIGHT);
 
@@ -14,7 +12,7 @@ public class PatientTab extends JPanel{
     //Constructor
     public PatientTab() {
         //Size of Window
-        setSize(1100, 800);
+        setSize(900, 800);
         
         //Top label font and placement
         titleLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
@@ -30,16 +28,11 @@ public class PatientTab extends JPanel{
         addButton.setBounds(920 + editButton.getPreferredSize().width, 70, size.width, size.height);
 
         //Null layout
-        patientPanel.setLayout(null);
+        setLayout(null);
 
         //Add elements to panel
-        patientPanel.add(titleLabel);
-        patientPanel.add(editButton);
-        patientPanel.add(addButton);
-        
-        //Add to frame
-        add(patientPanel);
-
-        setVisible(true);
+        add(titleLabel);
+        add(editButton);
+        add(addButton);
     } 
 }

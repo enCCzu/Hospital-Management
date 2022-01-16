@@ -40,6 +40,5 @@ public class RoomsTab extends JPanel{
         //Add to frame
         add(roomPanel);
 
-        setVisible(true);
     } 
 }
