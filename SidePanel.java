@@ -6,13 +6,20 @@ import java.awt.event.*;
 public class SidePanel extends JPanel{
 
     public SidePanel(JFrame frame){
+        // JPanel logoPanel = new JPanel();
+        // JPanel patientPanel = new JPanel();
+        // JPanel roomsPanel = new JPanel();
 
-        Dimension panelSize = new Dimension(200, 800);
-        setPreferredSize(panelSize);
-        setMinimumSize(panelSize);
-        setMaximumSize(panelSize);
+        Dimension panelSize = new Dimension(200, 400);
+        //setPreferredSize(panelSize);
+        //setMinimumSize(null);
+        //setMaximumSize(panelSize);
+        setSize(200, 800);
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        setBackground(Color.PINK);
+        //logoPanel.setLocation(0,0);
+
+        //setBackground(Color.PINK);
 
         ActionListener actionListener = new TestActionListener(frame, this);
 
@@ -22,7 +29,12 @@ public class SidePanel extends JPanel{
         // Tab Buttons
         JButton patientButton = new JButton("Patient"); 
         JButton roomsButton = new JButton("Rooms"); 
-        add(logoLabel);
+
+        // logoPanel.add(logoLabel);
+        // patientPanel.add(patientButton);
+        // roomsPanel.add(roomsButton);
+
+        add(logoLabel, 0);
         add(patientButton);
         add(roomsButton);
 
@@ -32,5 +44,7 @@ public class SidePanel extends JPanel{
 
         roomsButton.setActionCommand("Rooms Tab");
         roomsButton.addActionListener(actionListener);
+        setBackground(Color.PINK);
+        System.out.println(getSize());
     }
 }

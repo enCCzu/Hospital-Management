@@ -27,6 +27,7 @@ public class TestActionListener extends ViewHelperMethods implements ActionListe
             deconstructPanel(window, pan);
             System.out.println("Button is pressed");
             window.getContentPane().add(new SidePanel(window));
+            window.getContentPane().add(new PatientTab());
             refreshFrame(window);
         }
     }
