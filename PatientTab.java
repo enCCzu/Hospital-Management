@@ -1,4 +1,11 @@
-import javax.swing.*; 
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.event.*;
+
 import java.awt.*;
 
 public class PatientTab extends JPanel{
@@ -9,24 +16,101 @@ public class PatientTab extends JPanel{
     JButton editButton = new JButton("Edit");
     JButton addButton = new JButton("Add");
 
+
+    private String[] columnNames
+            = {"Name", "Patient ID", "Age", "Room Number"};
+
+    private Object[][] data = {
+        {"Annie", "00004", 7, 4},
+        {"Ashe", "00005", 23, 5},
+        {"Caitlyn", "00006", 27, 6},
+        {"Camille", "00002", 64, 2},
+        {"Danny", "00008", 16, 8},
+        {"Diana", "00009", 23, 9},
+        {"Erin", "00003", 16, 3}
+    };
+
+    private DefaultTableModel model = new DefaultTableModel(data, columnNames);
+    private JTable patientTable = new JTable(model);
+
+    JScrollPane scrollPane = new JScrollPane(patientTable);
+
+    private TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(patientTable.getModel());
+
+    private JTextField jtfFilter = new JTextField();
+
     //Constructor
     public PatientTab() {
         //Size of Window
-        setSize(900, 800);
+        //setSize(900, 800);
         
         //Top label font and placement
         titleLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         Dimension size = titleLabel.getPreferredSize();
-        titleLabel.setBounds(230, 70, size.width + 70, size.height);
+        titleLabel.setBounds(230, 70, size.width, size.height);
 
         //Edit button and placement
         size = editButton.getPreferredSize();
-        editButton.setBounds(330, 130, size.width + 70, size.height);
+        editButton.setBounds(600, 70, size.width, size.height);
 
         //Add button and placement
         size = addButton.getPreferredSize();
-        addButton.setBounds(500, 130, size.width + 70, size.height);
+        addButton.setBounds(650 + editButton.getPreferredSize().width, 70, size.width, size.height);
 
+
+        patientTable.setRowSorter(rowSorter);
+        // Initializing the JTable
+        patientTable.setBounds(250, 75, 800, 600);
+        scrollPane = new JScrollPane(patientTable);
+        scrollPane.setBounds(230, 125, 700, 600);
+
+        jtfFilter.setBounds(230,100,200,20);
+
+
+        //jtfFilter.setBounds(0, 20, 100, 20);
+
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
+
+        patientTable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                JTable target = (JTable)e.getSource();
+                int row = target.getSelectedRow();
+                int column = target.getSelectedColumn();
+
+                System.out.println(row);
+                System.out.println(column);
+               // do some stuff
+            }
+          });
         //Null layout
         setLayout(null);
 
@@ -34,5 +118,7 @@ public class PatientTab extends JPanel{
         add(titleLabel);
         add(editButton);
         add(addButton);
+        add(scrollPane);
+        add(jtfFilter);
     } 
 }
