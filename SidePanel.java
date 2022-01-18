@@ -1,9 +1,24 @@
 import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.io.File; 
+import java.io.IOException; 
+import java.awt.*;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.event.*;
+import java.awt.image.BufferedImage; 
+import java.awt.Font;
 
 public class SidePanel extends JPanel{
+
+    private void setPosition(GridBagConstraints constraints, int row, int column, int spanColumn, Insets padding){ // figure out padding or anchor? 
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridy = row;
+        constraints.gridx = column;
+        constraints.gridwidth = spanColumn;
+        constraints.insets = padding;
+    }
 
     public SidePanel(JFrame frame){
         // JPanel logoPanel = new JPanel();
@@ -17,32 +32,44 @@ public class SidePanel extends JPanel{
         setSize(200, 800);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
+        GridBagLayout gbl = new GridBagLayout(); 
+        setLayout(gbl);
+
+        GridBagConstraints constraints = new GridBagConstraints();
+
         //logoPanel.setLocation(0,0);
 
         //setBackground(Color.PINK);
 
         ActionListener actionListener = new TestActionListener(frame, this);
 
-        //  Top Label
-        JLabel logoLabel = new JLabel("CovidCaptur Sakura"); 
+        // //  Top Label
+        // JLabel logoLabel = new JLabel("CovidCaptor Sakura"); 
+        // logoLabel.setBounds(0,0,80,30);
+        // add(logoLabel);
 
         // Tab Buttons
         JButton patientButton = new JButton("Patient"); 
+
+        setPosition(constraints, 1, 0, 1, new Insets(10,0,0,0));
+        gbl.setConstraints(patientButton, constraints);
+        add(patientButton);
+
         JButton roomsButton = new JButton("Rooms"); 
+        setPosition(constraints, 2, 0, 1, new Insets(10,0,0,0));
+        gbl.setConstraints(roomsButton, constraints);
+        add(roomsButton);
 
         // logoPanel.add(logoLabel);
         // patientPanel.add(patientButton);
         // roomsPanel.add(roomsButton);
 
-        add(logoLabel, 0);
-        add(patientButton);
-        add(roomsButton);
 
         //Action Listener for buttons
-        patientButton.setActionCommand("Patient Tab");
+        patientButton.setActionCommand("patientTab");
         patientButton.addActionListener(actionListener);
 
-        roomsButton.setActionCommand("Rooms Tab");
+        roomsButton.setActionCommand("roomsTab");
         roomsButton.addActionListener(actionListener);
         setBackground(Color.PINK);
         System.out.println(getSize());

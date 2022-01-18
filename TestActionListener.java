@@ -30,6 +30,21 @@ public class TestActionListener extends ViewHelperMethods implements ActionListe
             window.getContentPane().add(new PatientTab());
             refreshFrame(window);
         }
+        if (command.equals("patientTab")){
+            window.getContentPane().removeAll();
+            System.out.println("Patient button is pressed");
+            window.getContentPane().add(new SidePanel(window));
+            window.getContentPane().add(new PatientTab());
+            refreshFrame(window);
+        }
+
+        if (command.equals("roomsTab")){
+            window.getContentPane().removeAll();
+            System.out.println("Room button is pressed");
+            window.getContentPane().add(new SidePanel(window));
+            window.getContentPane().add(new RoomsTab());
+            refreshFrame(window);
+        }
     }
     
 }

@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RoomsTab extends JPanel{
-    JPanel roomPanel = new JPanel();
 
     //Top Label of Tab
     JLabel titleLabel = new JLabel("Rooms", JLabel.RIGHT);
@@ -13,32 +12,29 @@ public class RoomsTab extends JPanel{
 
     //Constructor
     public RoomsTab() {
+
+        //Null layout
+        setLayout(null);
         //Size of Window
-        setSize(1100, 800);
+        setSize(900, 800);
         
         //Top label font and placement
         titleLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         Dimension size = titleLabel.getPreferredSize();
-        titleLabel.setBounds(230, 70, size.width, size.height);
+        titleLabel.setBounds(230, 70, size.width + 70, size.height);
 
         //Edit button and placement
         size = editButton.getPreferredSize();
-        editButton.setBounds(900, 70, size.width, size.height);
+        editButton.setBounds(330, 130, size.width + 70, size.height);
 
         //Add button and placement
         size = addButton.getPreferredSize();
-        addButton.setBounds(920 + editButton.getPreferredSize().width, 70, size.width, size.height);
-
-        //Null layout
-        roomPanel.setLayout(null);
+        addButton.setBounds(500, 130, size.width + 70, size.height);
 
         //Add elements to panel
-        roomPanel.add(titleLabel);
-        roomPanel.add(editButton);
-        roomPanel.add(addButton);
-        
-        //Add to frame
-        add(roomPanel);
+        add(titleLabel);
+        add(editButton);
+        add(addButton);
 
     } 
 }

@@ -12,20 +12,20 @@ public class PatientTab extends JPanel{
     //Constructor
     public PatientTab() {
         //Size of Window
-        //setSize(900, 800);
+        setSize(900, 800);
         
         //Top label font and placement
         titleLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         Dimension size = titleLabel.getPreferredSize();
-        titleLabel.setBounds(230, 70, size.width, size.height);
+        titleLabel.setBounds(230, 70, size.width + 70, size.height);
 
         //Edit button and placement
         size = editButton.getPreferredSize();
-        editButton.setBounds(600, 70, size.width, size.height);
+        editButton.setBounds(330, 130, size.width + 70, size.height);
 
         //Add button and placement
         size = addButton.getPreferredSize();
-        addButton.setBounds(650 + editButton.getPreferredSize().width, 70, size.width, size.height);
+        addButton.setBounds(500, 130, size.width + 70, size.height);
 
         //Null layout
         setLayout(null);
