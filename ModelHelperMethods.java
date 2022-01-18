@@ -142,6 +142,9 @@ abstract class ModelHelperMethods {
     }
     
     protected boolean userAuthentication(String userName, String password, HashMap<String,String> userLogin){
-        return userLogin.get(userName).equals(password);
+        if(userLogin.containsKey(userName){
+            return userLogin.get(userName).equals(password);
+        }
+        return false;
     }
 }
