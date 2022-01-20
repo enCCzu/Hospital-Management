@@ -7,7 +7,7 @@ abstract class ControllerHelperMethods {
 
     public boolean checkPassword(String userName, String password){
         
-        return model.checkPassword(userName,password);
+        return model.userAuthentication(userName,password);
     }
 
     public ArrayList<ArrayList<String>> getTable(){
