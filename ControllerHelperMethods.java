@@ -25,4 +25,9 @@ abstract class ControllerHelperMethods {
 
         model.editPatient(column, id, change);
     }
+    protected int findNumberOfPatients(){
+        int num = patientInfo.size();
+
+        return num;
+    }
 }
