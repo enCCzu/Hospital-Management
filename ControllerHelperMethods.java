@@ -3,19 +3,19 @@ import java.awt.*;
 import java.util.ArrayList;
 abstract class ControllerHelperMethods {
     
-    String[] table = new String[];
+    ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>;
 
     public boolean checkPassword(String userName, String password){
         
         return model.checkPassword(userName,password);
     }
 
-    public String[] getTable(){
+    public ArrayList<ArrayList<String>> getTable(){
         table = model.getTable();
         return table;
     }
 
-    public String[] sendTable(){
+    public ArrayList<ArrayList<String>> sendTable(){
 
         return table;
     }
