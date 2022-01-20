@@ -2,24 +2,26 @@ import java.io.*;
 import java.awt.*;
 import java.util.ArrayList;
 abstract class ControllerHelperMethods {
+    
+    String[] table = new String[];
 
-    public boolean checkPassword(){
-
-        return true;
+    public boolean checkPassword(String userName, String password){
+        
+        return model.checkPassword(userName,password);
     }
 
-    public String[] getTable(String[] table){
+    public String[] getTable(){
+        table = model.getTable();
+        return table;
+    }
+
+    public String[] sendTable(){
 
         return table;
     }
 
-    public String[] sendTable(String[] table){
+    public void editTable(int column, int id, String change){
 
-        return table;
-    }
-
-    public String[] editTable(String[] table){
-
-        return table;
+        model.editPatient(column, id, change);
     }
 }
