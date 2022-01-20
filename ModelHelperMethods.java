@@ -157,5 +157,11 @@ abstract class ModelHelperMethods {
         }
 
     }
+    protected boolean userAuthentication(String userName, String password){
+        if(loginInfo.containsKey(userName)){
+            return loginInfo.get(userName).equals(password);
+        }
+        return false;
+    }
 
 }
