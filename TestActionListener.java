@@ -1,8 +1,10 @@
+// imports 
+
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.*;
 
-
+// test action listener - make sure to change later 
 public class TestActionListener extends ViewHelperMethods implements ActionListener{
 
     private JFrame window; 
