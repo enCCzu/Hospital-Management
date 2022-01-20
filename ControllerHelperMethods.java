@@ -15,8 +15,9 @@ abstract class ControllerHelperMethods {
         return table;
     }
 
-    public ArrayList<ArrayList<String>> sendTable(){
-
+    public ArrayList<ArrayList<String>> sendTable(ArrayList<ArrayList<String>> viewTable){
+        
+        table = viewTable; 
         return table;
     }
 
