@@ -42,7 +42,8 @@ public class LoginPanel extends JPanel{
         GridBagConstraints constraints = new GridBagConstraints();
 
         // Action Listener 
-        ActionListener actionListener = new TestActionListener(frame, this);
+        TestActionListener actionListener = new TestActionListener(frame);
+        actionListener.sendLoginPanel(this);
 
         // Logo 
         try {

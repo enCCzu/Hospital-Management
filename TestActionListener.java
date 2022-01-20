@@ -1,17 +1,34 @@
-import javax.swing.*; 
+import javax.swing.*;
+import java.awt.Color;
 import java.awt.event.*;
+
 
 public class TestActionListener extends ViewHelperMethods implements ActionListener{
 
     private JFrame window; 
-    private JPanel pan;
+    private LoginPanel loginPanel;
+    private SidePanel sidebar;
+    private JButton patientButton;
+    private JButton roomButton;
     // private JLabel text = new JLabel("Press button");
     // private int count = 0; 
 
-    public TestActionListener(JFrame frame, JPanel panel){
+    public void sendButtons(JButton patientTab, JButton roomTab){
+
+        patientButton = patientTab;
+        roomButton = roomTab; 
+
+    }
+
+    public void sendLoginPanel(LoginPanel panel){
+
+        loginPanel = panel;
+
+    }
+
+    public TestActionListener(JFrame frame){
 
         window = frame; 
-        pan = panel;
 
     }
 
@@ -24,25 +41,34 @@ public class TestActionListener extends ViewHelperMethods implements ActionListe
         // text.setText("Button was pressed: " + count);
 
         if (command.equals("loginButton")){
-            deconstructPanel(window, pan);
+            deconstructPanel(window, loginPanel);
             System.out.println("Button is pressed");
-            window.getContentPane().add(new SidePanel(window));
+            sidebar = new SidePanel(window, "patient");
+            window.getContentPane().add(sidebar);
             window.getContentPane().add(new PatientTab());
             refreshFrame(window);
         }
         if (command.equals("patientTab")){
             window.getContentPane().removeAll();
             System.out.println("Patient button is pressed");
-            window.getContentPane().add(new SidePanel(window));
+            sidebar = new SidePanel(window, "patient");
+            window.getContentPane().add(sidebar);
             window.getContentPane().add(new PatientTab());
+            patientButton.setBackground(Color.WHITE);
+            roomButton.setBackground(Color.PINK);
+            refreshPanel(sidebar);
             refreshFrame(window);
         }
 
         if (command.equals("roomsTab")){
             window.getContentPane().removeAll();
             System.out.println("Room button is pressed");
-            window.getContentPane().add(new SidePanel(window));
+            sidebar = new SidePanel(window, "rooms");
+            window.getContentPane().add(sidebar);
             window.getContentPane().add(new RoomsTab());
+            roomButton.setBackground(Color.WHITE);
+            patientButton.setBackground(Color.PINK);
+            refreshPanel(sidebar);
             refreshFrame(window);
         }
     }

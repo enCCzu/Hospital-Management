@@ -1,12 +1,11 @@
-import javax.swing.*;
+import javax.swing.*; 
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.event.*;
-
-import java.awt.*;
 
 public class PatientTab extends JPanel{
     //Top Label of Tab
@@ -15,7 +14,6 @@ public class PatientTab extends JPanel{
     //Buttons to edit and add to the table
     JButton editButton = new JButton("Edit");
     JButton addButton = new JButton("Add");
-
 
     private String[] columnNames
             = {"Name", "Patient ID", "Age", "Room Number"};
@@ -39,24 +37,24 @@ public class PatientTab extends JPanel{
 
     private JTextField jtfFilter = new JTextField();
 
+
     //Constructor
     public PatientTab() {
         //Size of Window
-        //setSize(900, 800);
+        setSize(900, 800);
         
         //Top label font and placement
         titleLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         Dimension size = titleLabel.getPreferredSize();
-        titleLabel.setBounds(230, 70, size.width, size.height);
+        titleLabel.setBounds(150, 20, size.width + 70, size.height);
 
         //Edit button and placement
         size = editButton.getPreferredSize();
-        editButton.setBounds(600, 70, size.width, size.height);
+        editButton.setBounds(230, 70, size.width + 70, size.height);
 
         //Add button and placement
         size = addButton.getPreferredSize();
-        addButton.setBounds(650 + editButton.getPreferredSize().width, 70, size.width, size.height);
-
+        addButton.setBounds(400, 70, size.width + 70, size.height);
 
         patientTable.setRowSorter(rowSorter);
         // Initializing the JTable

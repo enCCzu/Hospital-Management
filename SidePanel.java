@@ -20,7 +20,7 @@ public class SidePanel extends JPanel{
         constraints.insets = padding;
     }
 
-    public SidePanel(JFrame frame){
+    public SidePanel(JFrame frame, String secondPanel){
         // JPanel logoPanel = new JPanel();
         // JPanel patientPanel = new JPanel();
         // JPanel roomsPanel = new JPanel();
@@ -41,7 +41,7 @@ public class SidePanel extends JPanel{
 
         //setBackground(Color.PINK);
 
-        ActionListener actionListener = new TestActionListener(frame, this);
+        TestActionListener actionListener = new TestActionListener(frame);
 
         // //  Top Label
         // JLabel logoLabel = new JLabel("CovidCaptor Sakura"); 
@@ -50,14 +50,27 @@ public class SidePanel extends JPanel{
 
         // Tab Buttons
         JButton patientButton = new JButton("Patient"); 
-
         setPosition(constraints, 1, 0, 1, new Insets(10,0,0,0));
         gbl.setConstraints(patientButton, constraints);
-        add(patientButton);
+        
 
-        JButton roomsButton = new JButton("Rooms"); 
+        JButton roomsButton = new JButton("Rooms");
         setPosition(constraints, 2, 0, 1, new Insets(10,0,0,0));
         gbl.setConstraints(roomsButton, constraints);
+        
+
+        if (secondPanel.equals("patient")){
+
+            patientButton.setBackground(Color.WHITE);
+            roomsButton.setBackground(Color.PINK); 
+        }
+        else if(secondPanel.equals("rooms")){
+
+            patientButton.setBackground(Color.PINK);
+            roomsButton.setBackground(Color.WHITE); 
+        }
+
+        add(patientButton);
         add(roomsButton);
 
         // logoPanel.add(logoLabel);
@@ -66,6 +79,9 @@ public class SidePanel extends JPanel{
 
 
         //Action Listener for buttons
+
+        actionListener.sendButtons(patientButton, roomsButton);
+
         patientButton.setActionCommand("patientTab");
         patientButton.addActionListener(actionListener);
 

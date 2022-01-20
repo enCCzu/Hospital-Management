@@ -7,7 +7,7 @@ abstract class ModelHelperMethods {
     private final String PATIENT_LIST = "Patient_List.csv";
     private BufferedReader readFile; 
     private String currentLine; 
-    private ArrayList<ArrayList<String> > patientInfo = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<String>> patientInfo = new ArrayList<ArrayList<String>>(); // IS NOT 2D ARRAY IN CASE USER WANTS TO ADD MORE COLUMNS
     private final String USER_LIST = "User_List.csv";
     private HashMap<String, String> loginInfo = new HashMap<>();
 
@@ -125,26 +125,37 @@ abstract class ModelHelperMethods {
         }
     }
 
-    protected ArrayList getTable(){
+    protected ArrayList<ArrayList<String>> getTable(){
 
         return patientInfo; 
 
     }
 
-    protected void addOrRemoveRow() {
+    protected void addRow() {
 
+        patientInfo.add(new ArrayList<String>());
 
     }
 
-    protected void editTable(){
+    protected void removeRow(int row){
 
-        
+        patientInfo.remove(row);
+
     }
-    
-    protected boolean userAuthentication(String userName, String password, HashMap<String,String> userLogin){
-        if(userLogin.containsKey(userName){
-            return userLogin.get(userName).equals(password);
+
+    protected void editPatient(int column, String id, String change){
+
+        for (int i = 0; i < patientInfo.size(); i++){
+
+
+            if (patientInfo.get(i).get(1).equals(id)){
+
+                patientInfo.get(i).set(column, change);
+
+
+            }
         }
-        return false;
+
     }
+
 }
