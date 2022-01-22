@@ -34,4 +34,29 @@ abstract class ControllerHelperMethods {
         table = viewTable;
         return table;
     }
+    protected int findNumberOfPatients(){
+        return patientInfo.size();
+    }
+
+    protected int findTotalBeds(){
+        int totalBeds = 0;
+        for(int i = 0; i < roomInfo.size(); i++){
+            totalBeds += Integer.parseInt(roomInfo.get(i).get(1))
+        }
+
+        return totalBeds;
+    }
+
+    protected int findAvailableBeds(){
+        int availableBeds = 0;
+        for(int i = 0; i < roomInfo.size(); i++){
+            availableBeds += Integer.parseInt(roomInfo.get(i).get(2))
+        }
+
+        return availableBeds;
+    }
+
+    protected int findNumberOfRooms(){
+        return roomInfo.size();
+    }
 }
