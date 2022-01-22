@@ -4,31 +4,26 @@ import java.util.HashMap;
 
 abstract class ModelHelperMethods {
 
-    private final String PATIENT_LIST = "Patient_List.csv";
     private BufferedReader readFile; 
     private String currentLine; 
-    private ArrayList<ArrayList<String>> patientInfo = new ArrayList<ArrayList<String>>(); // IS NOT 2D ARRAY IN CASE USER WANTS TO ADD MORE COLUMNS
-    private final String USER_LIST = "User_List.csv";
-    private HashMap<String, String> loginInfo = new HashMap<>();
 
-
-    protected void csvToArrayList(){
+    protected void csvToArrayList(ArrayList<ArrayList<String>> table, String file){
 
         try {
 
             int counter = 0; 
 
-            readFile = new BufferedReader(new FileReader(PATIENT_LIST));
+            readFile = new BufferedReader(new FileReader(file));
 
             while ((currentLine = readFile.readLine()) != null){
 
                 String[] tempArray = currentLine.split("|");
 
-                patientInfo.add(new ArrayList<String>());
+                table.add(new ArrayList<String>());
                 counter++; 
 
                 for (int i = 0; i < tempArray.length; i++){
-                    patientInfo.get(counter).add(i, tempArray[i]);
+                    table.get(counter).add(i, tempArray[i]);
                 }
 
             }
@@ -42,18 +37,17 @@ abstract class ModelHelperMethods {
 
     }
 
-    //https://www.geeksforgeeks.org/java-util-hashmap-in-java-with-examples/#:~:text=HashMap%20is,type%20(e.g.%20an%20Integer).
-    protected void csvToHashMap(){
+    protected void csvToHashMap(HashMap<String, String> hashMap, String file){
 
         try {
 
-            readFile = new BufferedReader(new FileReader(USER_LIST));
+            readFile = new BufferedReader(new FileReader(file));
 
             while ((currentLine = readFile.readLine()) != null){
 
                 String[] tempArray = currentLine.split("|");
 
-                loginInfo.put(tempArray[0], tempArray[1]);
+                hashMap.put(tempArray[0], tempArray[1]);
             }
 
         }
@@ -90,12 +84,12 @@ abstract class ModelHelperMethods {
 
     }
 
-
-    protected  void arrayListToCSV(ArrayList<String[]> table, String tableName){
+    // rewrite 
+    protected  void arrayListToCSV(ArrayList<ArrayList<String>> table, String tableName){
         String line = "";
         try{
             // Initializing the File
-            FileWriter file = new FileWriter(tableName + "Table.csv");
+            FileWriter file = new FileWriter(tableName + ".csv");
 
             // Initialing BufferedWriter
             BufferedWriter writer = new BufferedWriter(file);
@@ -125,43 +119,26 @@ abstract class ModelHelperMethods {
         }
     }
 
-    protected ArrayList<ArrayList<String>> getTable(){
+    protected void addRow(ArrayList<ArrayList<String>> table, String listName) {
 
-        return patientInfo; 
+        table.add(new ArrayList<String>());
 
-    }
-
-    protected void addRow() {
-
-        patientInfo.add(new ArrayList<String>());
+        arrayListToCSV(table, listName);
 
     }
 
-    protected void removeRow(int row){
+    protected void removeRow(ArrayList<ArrayList<String>> table, int row){
 
-        patientInfo.remove(row);
-
-    }
-
-    protected void editPatient(int column, String id, String change){
-
-        for (int i = 0; i < patientInfo.size(); i++){
-
-
-            if (patientInfo.get(i).get(1).equals(id)){
-
-                patientInfo.get(i).set(column, change);
-
-
-            }
-        }
+        table.remove(row);
 
     }
-    protected boolean userAuthentication(String userName, String password){
-        if(loginInfo.containsKey(userName)){
-            return loginInfo.get(userName).equals(password);
-        }
-        return false;
+
+    protected void editTable(ArrayList<ArrayList<String>> table, int row, int column, String change){
+
+
+        table.get(row).set(column, change);
+        // get row and column from table 
+
     }
 
 }

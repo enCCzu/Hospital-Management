@@ -1,33 +1,37 @@
-import java.io.*; 
+import java.io.*;
 import java.awt.*;
 import java.util.ArrayList;
+
 abstract class ControllerHelperMethods {
-    
-    ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>;
 
-    public boolean checkPassword(String userName, String password){
-        
-        return model.userAuthentication(userName,password);
+    protected ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
+    protected LoginCredentialsDatabase loginDatabase = new LoginCredentialsDatabase();
+    protected PatientDatabase patientDatabase = new PatientDatabase();
+    protected RoomManagementDatabase roomDatabase = new RoomManagementDatabase();
+
+    public boolean checkPassword(String userName, String password) {
+
+        return checkPassword(userName, password);
     }
 
-    public ArrayList<ArrayList<String>> getTable(){
-        table = model.getTable();
+    public ArrayList<ArrayList<String>> getTable(String requestedTable) {
+
+        if (requestedTable.equals("patient")){
+
+            table = patientDatabase.getTable();
+
+        }
+        else if (requestedTable.equals("room")){
+
+            table = roomDatabase.getTable();
+
+        }
         return table;
     }
 
-    public ArrayList<ArrayList<String>> sendTable(ArrayList<ArrayList<String>> viewTable){
-        
-        table = viewTable; 
+    public ArrayList<ArrayList<String>> sendTable(ArrayList<ArrayList<String>> viewTable) {
+
+        table = viewTable;
         return table;
-    }
-
-    public void editTable(int column, int id, String change){
-
-        model.editPatient(column, id, change);
-    }
-    protected int findNumberOfPatients(){
-        int num = patientInfo.size();
-
-        return num;
     }
 }

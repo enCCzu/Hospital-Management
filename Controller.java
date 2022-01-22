@@ -4,6 +4,8 @@ import java.util.ArrayList;
 class Controller extends ControllerHelperMethods{
 
     public Controller(){
-        Model model = new Model();
+        LoginCredentialsDatabase loginDatabase = super.loginDatabase;
+        PatientDatabase patientDatabase = super.patientDatabase;
+        RoomManagementDatabase roomDatabase = super.roomDatabase;
     }
 }
