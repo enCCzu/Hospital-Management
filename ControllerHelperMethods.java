@@ -42,7 +42,7 @@ abstract class ControllerHelperMethods {
         int totalBeds = 0;
         ArrayList<ArrayList<String>> roomInfo = roomDatabase.getTable();
         for(int i = 0; i < roomInfo.size(); i++){
-            totalBeds += Integer.parseInt(roomInfo.get(i).get(1))
+            totalBeds += Integer.parseInt(roomInfo.get(i).get(1));
         }
 
         return totalBeds;
@@ -52,7 +52,7 @@ abstract class ControllerHelperMethods {
         int availableBeds = 0;
         ArrayList<ArrayList<String>> roomInfo = roomDatabase.getTable();
         for(int i = 0; i < roomInfo.size(); i++){
-            availableBeds += Integer.parseInt(roomInfo.get(i).get(2))
+            availableBeds += Integer.parseInt(roomInfo.get(i).get(2));
         }
 
         return availableBeds;
