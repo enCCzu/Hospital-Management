@@ -35,11 +35,12 @@ abstract class ControllerHelperMethods {
         return table;
     }
     protected int findNumberOfPatients(){
-        return patientInfo.size();
+        return patientDatabase.getTable().size();
     }
 
     protected int findTotalBeds(){
         int totalBeds = 0;
+        ArrayList<ArrayList<String>> roomInfo = roomDatabase.getTable();
         for(int i = 0; i < roomInfo.size(); i++){
             totalBeds += Integer.parseInt(roomInfo.get(i).get(1))
         }
@@ -49,6 +50,7 @@ abstract class ControllerHelperMethods {
 
     protected int findAvailableBeds(){
         int availableBeds = 0;
+        ArrayList<ArrayList<String>> roomInfo = roomDatabase.getTable();
         for(int i = 0; i < roomInfo.size(); i++){
             availableBeds += Integer.parseInt(roomInfo.get(i).get(2))
         }
@@ -57,6 +59,6 @@ abstract class ControllerHelperMethods {
     }
 
     protected int findNumberOfRooms(){
-        return roomInfo.size();
+        return roomDatabase.getTable().size();
     }
 }
