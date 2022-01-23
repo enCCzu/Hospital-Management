@@ -95,7 +95,7 @@ abstract class ModelHelperMethods {
             BufferedWriter writer = new BufferedWriter(file);
 
             // Looping through ArrayList 
-            for(String[] i : table) {
+            for(ArrayList<String> i : table) {
                 //Looping through Array and setting the line
                 for(String j : i){
                     line = line + j + "|";
