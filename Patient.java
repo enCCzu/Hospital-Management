@@ -48,14 +48,15 @@ public class Patient extends JPanel {
     private JTextField jtfFilter = new JTextField();
 
     // Color Variables
-    private Color pink = new Color(255, 204, 229);
-    private Color transparent = new Color(0, 0, 0, 0);
+    private Color rosePink = new Color(255, 105, 105);
+    private Color lightPink = new Color(255, 186, 179);
     private Color beige = new Color(246, 245, 225);
     private Color unbleachedSilk = new Color(255, 216, 204);
-    private Color palePink = new Color(249, 215, 214);
-    private Color snow = new Color(255, 247, 246);
-    private Color platinum = new Color(228, 231, 234);
-    private Color lightSteelBlue = new Color(176, 193, 219);
+    private Color peachPink = new Color(249, 215, 214);
+    private Color snowPink = new Color(255, 239, 237);
+    private Color platinum = new Color(237, 246, 255);
+    private Color steelBlue = new Color(176, 193, 219);
+    private Color erinColor = new Color(225, 242, 255);
 
 
     /**
@@ -64,25 +65,28 @@ public class Patient extends JPanel {
     public void setElementAttributes(){
         //Panel 
         setSize(900, 800);
-        setBackground(snow);
+        setBackground(erinColor);
         setLayout(null);
 
         // Title of page 
-        JLabel titleLabel = new JLabel("Patients", JLabel.RIGHT);
+        JLabel titleLabel = new JLabel("<html>"+"Patients"+"</html>", JLabel.RIGHT);
         titleLabel.setFont(new Font("Verdana", Font.PLAIN, 35));
+        titleLabel.setForeground(rosePink);
         // position
         Dimension size = titleLabel.getPreferredSize();
         titleLabel.setBounds(225, 20, size.width, size.height);
 
         // Read and use images for add and delete row buttons
         try {
-            BufferedImage addImage = ImageIO.read(getClass().getResource("add.png"));
+            BufferedImage addImage = ImageIO.read(getClass().getResource("Images/add.png"));
             addButton.setIcon(new ImageIcon(addImage));
 
-            BufferedImage minusImage = ImageIO.read(getClass().getResource("minus.png"));
+            BufferedImage minusImage = ImageIO.read(getClass().getResource("Images/minus.png"));
             deleteButton.setIcon(new ImageIcon(minusImage));
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } catch (Exception e) {
+
+            System.out.println("Images required. Please do not steal the images.");
+            System.out.println(e);
 
         }
 
@@ -110,9 +114,9 @@ public class Patient extends JPanel {
         
         // Initializing the JTable
         patientTable.setRowSorter(rowSorter);
-        patientTable.setBounds(250, 75, 800, 600);
+        patientTable.setBounds(250, 75, 900, 600);
         scrollPane = new JScrollPane(patientTable);
-        scrollPane.setBounds(225, 100, 700, 600);
+        scrollPane.setBounds(225, 100, 800, 600);
         
         //Table Color adjustment
         patientTable.setBackground(beige);
@@ -279,9 +283,6 @@ public class Patient extends JPanel {
                     int row = target.getSelectedRow();
                     int column = target.getSelectedColumn();
 
-
-                    System.out.println(row);
-                    System.out.println(column);
                     editCell(row,column);
                }
             }

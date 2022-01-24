@@ -2,6 +2,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter; 
 
 // Manages which panel is on the window/frame
 public class InterfaceController extends GraphicalInterfaces implements ActionListener{
@@ -19,11 +21,11 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     private JLabel errorMessage; 
 
     /**
-     * Saves the Login information that the user entered
-     * @param panel Login Panel being sent
-     * @param inputUsername Username the user entered
-     * @param inputPassword Password the user entered
-     * @param wrongInput Invalid input message
+     * 
+     * @param panel
+     * @param inputUsername
+     * @param inputPassword
+     * @param wrongInput
      */
     public void sendLoginPanel(LoginPanel panel, JTextField inputUsername, JPasswordField inputPassword, JLabel wrongInput){
 
@@ -35,19 +37,36 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     }
 
     /**
-     * Called by the view to update the frame
-     * Adds the sidebar and dashboard
+     * 
      */
     private void dashboardPage(){
 
-        // window.getContentPane().add(new Sidebar)
-        // window.getContentPane().add(new dashboard)
+        window.getContentPane().add(new Sidebar(window, "dashboard"));
+        window.getContentPane().add(new Dashboard());
 
     }
 
     /**
-     * Constructor for the interface controller
-     * @param frame frame being saved
+     * 
+     */
+    private void patientPage(){
+
+        window.getContentPane().add(new Sidebar(window, "patient"));
+        window.getContentPane().add(new Patient());
+
+    }
+
+    private void roomPage(){
+
+        window.getContentPane().add(new Sidebar(window, "room"));
+        //window.getContentPane().add(new Room());
+
+    }
+
+
+    /**
+     * 
+     * @param frame
      */
     public InterfaceController(JFrame frame){
 
@@ -55,34 +74,36 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
     }
 
-    @Override
     /**
-     * Takes in the actions performed 
-     * Performs an action when a button is clicked
-     * @param e action that occurred
+     * 
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand(); 
 
-        // LOGIN PANEL BUTTON(S)
-
+        // LOGIN PANEL BUTTON
         if (command.equals("loginButton")){
-            // Debugging messages 
-            System.out.println("Login button is pressed");
 
             String savedUsername = username.getText();
             String savedPassword = String.valueOf(password.getPassword());
 
             if (databaseController.checkPassword(savedUsername, savedPassword)){
 
+                // Getting current date/time to store the user's login history
+                LocalDateTime date = LocalDateTime.now(); 
+                DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String savedDate = date.format(formatDate);
+
+                // Calling controller to store to database 
+                databaseController.storeRecentLogin(savedUsername, savedDate);
+
                 // Remove the login panel from the window 
                 deconstructPanel(window, loginPanel);
 
+                dashboardPage();
+
             }
-
             else {
-
-                System.out.println("Password not right");
 
                 errorMessage.setText("Username or password is incorrect");
 
@@ -91,10 +112,40 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
             }
 
             refreshFrame(window);
+        }
+
+        // SIDEBAR BUTTONS
+
+        // pressing patient button 
+        if (command.equals("patientTab")){
+
+            window.getContentPane().removeAll();
+
+            patientPage();
+
+            refreshFrame(window);
+
+        }
 
 
-            // Add new panels to the window 
-            //window.getContentPane().add(new Sidebar)
+        else if (command.equals("roomsTab")){
+
+            window.getContentPane().removeAll();
+
+            roomPage();
+
+            refreshFrame(window);
+
+
+        }
+
+        else if (command.equals("dashboardTab")){
+
+            window.getContentPane().removeAll();
+
+            dashboardPage();
+
+            refreshFrame(window);
 
         }
         

@@ -12,6 +12,7 @@ abstract class DatabaseControllers {
     protected CredentialsDatabase credentialsDatabase = new CredentialsDatabase();
     protected PatientDatabase patientDatabase = new PatientDatabase();
     protected RoomDatabase roomDatabase = new RoomDatabase();
+    protected LoginsDatabase loginDatabase = new LoginsDatabase(); 
 
     // Stores which user is logged in 
     protected String loggedInUsername = "";
@@ -20,17 +21,11 @@ abstract class DatabaseControllers {
      * Checks the username and password entered
      * @param userName Username entered
      * @param password Password entered
-     * @return boolean true if matches sytem
+     * @return boolean true if matches system
      */
     public boolean checkPassword(String username, String password) {
 
-        if (credentialsDatabase.checkPassword(username, password)){
-
-            loggedInUsername = username; 
-
-            return true;
-        }
-        return false;
+        return credentialsDatabase.checkPassword(username, password);
     }
 
     /**
@@ -102,7 +97,7 @@ abstract class DatabaseControllers {
      */
     protected String getUsername(){
 
-        return loggedInUsername;
+        return loginDatabase.getRecentLogin();
     }
 
     /**
@@ -113,7 +108,6 @@ abstract class DatabaseControllers {
     public String[][] arrayListToArray(ArrayList<ArrayList<String>> arrayList){
         String[][] array = new String[arrayList.size()][];
         array = arrayList.stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);
-        System.out.println(array.length);
         return array;
     }
 
@@ -124,6 +118,12 @@ abstract class DatabaseControllers {
     public void savePatientData(ArrayList<ArrayList<String>> arrayList){
 
         patientDatabase.saveData(arrayList);
+
+    }
+
+    protected void storeRecentLogin(String username, String date){
+
+        loginDatabase.saveRecentLogin(username, date);
 
     }
 

@@ -78,12 +78,12 @@ public class RoomDatabase extends Databases {
         int availableBeds = 0;
         for(int i = 0; i < roomInfo.size(); i++){
             try {
-                System.out.println(roomInfo.get(i).get(2));
                 availableBeds += Integer.parseInt(roomInfo.get(i).get(2));
             }
             catch (NumberFormatException e){
 
-                System.out.println("Who organized the data incorrectly?");
+                System.out.println("Please organize the data correctly.");
+                System.out.println(e);
 
             }
         }

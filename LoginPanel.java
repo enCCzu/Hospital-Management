@@ -1,23 +1,33 @@
+
 //Imports
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import java.io.File; 
-import java.io.IOException; 
+import java.io.File;
+import java.io.IOException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Color;
 import java.awt.event.*;
-import java.awt.image.BufferedImage; 
+import java.awt.image.BufferedImage;
 import java.awt.Font;
 
+public class LoginPanel extends JPanel {
 
-public class LoginPanel extends JPanel{
-    
     // Covidcaptor Sakura logo
-    private BufferedImage logo; 
+    private BufferedImage logo;
 
+    // Color Variables
+    private Color rosePink = new Color(255, 105, 105);
+    private Color lightPink = new Color(255, 186, 179);
+    private Color beige = new Color(246, 245, 225);
+    private Color unbleachedSilk = new Color(255, 216, 204);
+    private Color peachPink = new Color(249, 215, 214);
+    private Color snowPink = new Color(255, 239, 237);
+    private Color platinum = new Color(237, 246, 255);
+    private Color steelBlue = new Color(176, 193, 219);
+    private Color erinBlue = new Color(225, 242, 255);
 
     /**
      * 
@@ -27,7 +37,7 @@ public class LoginPanel extends JPanel{
      * @param spanColumn
      * @param padding
      */
-    private void setPosition(GridBagConstraints constraints, int row, int column, int spanColumn, Insets padding){ // figure out padding or anchor? 
+    private void setPosition(GridBagConstraints constraints, int row, int column, int spanColumn, Insets padding) { 
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridy = row;
@@ -40,111 +50,116 @@ public class LoginPanel extends JPanel{
      * 
      * @param frame
      */
-    public LoginPanel(JFrame frame){
-
+    public LoginPanel(JFrame frame) {
 
         // Panel and Layout
 
-        setBackground(Color.WHITE);
+        setBackground(erinBlue);
 
-        GridBagLayout gbl = new GridBagLayout(); 
+        GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
 
         GridBagConstraints constraints = new GridBagConstraints();
 
-        // Logo image 
+        // Logo image
         try {
             logo = ImageIO.read(new File("Images/CovidCaptorSakura.png"));
-        } 
+        }
 
-        catch (IOException e){
+        catch (IOException e) {
 
+            System.out.println("Image required. Please do not steal the images.");
             e.printStackTrace();
         }
 
         JLabel logoContainer = new JLabel(new ImageIcon(logo));
-        // layout of logo image 
-        setPosition(constraints, 0, 0, 3, new Insets(0,0,0,0));
+        // layout of logo image
+        setPosition(constraints, 0, 0, 3, new Insets(0, 0, 0, 0));
         gbl.setConstraints(logoContainer, constraints);
 
-
-        // instructions 
-        JLabel signInLabel = new JLabel("Sign In", SwingConstants.CENTER); 
+        // instructions
+        JLabel signInLabel = new JLabel("Sign In", SwingConstants.CENTER);
         signInLabel.setFont(new Font("Verdana", Font.PLAIN, 32));
         signInLabel.setOpaque(true);
-        signInLabel.setBackground(Color.PINK);
-        
-        // Layout of instructions 
-        setPosition(constraints, 1, 2, 1, new Insets(30,0,0,0));
+        signInLabel.setBackground(lightPink);
+
+        // Layout of instructions
+        setPosition(constraints, 1, 2, 1, new Insets(30, 0, 0, 0));
         constraints.ipady = 10;
         gbl.setConstraints(signInLabel, constraints);
 
-        
-        // Size for text boxes 
+        // Size for text boxes
         Dimension textBox = new Dimension(200, 30);
 
-        // Username text 
+        // Username text
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
-        // layout of username text 
-        setPosition(constraints, 2, 2, 1, new Insets(15,0,0,0));
+        // layout of username text
+        setPosition(constraints, 2, 2, 1, new Insets(15, 0, 0, 0));
         gbl.setConstraints(usernameLabel, constraints);
-        
-        // Username text box 
+
+        // Username text box
         JTextField inputUsername = new JTextField();
-        // size of text box 
+        // size of text box
         inputUsername.setMinimumSize(textBox);
         inputUsername.setPreferredSize(textBox);
-        // layout of username text box 
-        setPosition(constraints, 4, 2, 1, new Insets(10,0,0,0));
+        // layout of username text box
+        setPosition(constraints, 4, 2, 1, new Insets(10, 0, 0, 0));
         gbl.setConstraints(inputUsername, constraints);
 
-        // Password text 
+        // Password text
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         // layout of the password text
-        setPosition(constraints, 5, 2, 1, new Insets(15,0,0,0));
+        setPosition(constraints, 5, 2, 1, new Insets(15, 0, 0, 0));
         gbl.setConstraints(passwordLabel, constraints);
-        
-        // Password text box 
+
+        // Password text box
         JPasswordField inputPassword = new JPasswordField();
-        // size of text box 
+        // size of text box
         inputPassword.setMinimumSize(textBox);
         inputPassword.setPreferredSize(textBox);
-        // layout of password text box 
-        setPosition(constraints, 6, 2, 1, new Insets(10,0,0,0));
+        // layout of password text box
+        setPosition(constraints, 6, 2, 1, new Insets(10, 0, 0, 0));
         gbl.setConstraints(inputPassword, constraints);
 
-         // Login Button
-         Dimension buttonDimensions = new Dimension(100, 50);
+        // Login Button
+        Dimension buttonDimensions = new Dimension(100, 50);
 
-         JButton loginButton = new JButton("Log In");
-         loginButton.setFont(new Font("Verdana", Font.PLAIN, 18));
-         loginButton.setBackground(Color.PINK);
-         loginButton.setForeground(Color.BLACK);
-         // set size of button 
-         loginButton.setMinimumSize(buttonDimensions);
-         loginButton.setPreferredSize(buttonDimensions);
-         // layout of button 
-         setPosition(constraints, 7, 2, 1, new Insets(30,0,0,0));
-         gbl.setConstraints(loginButton, constraints);
+        JButton loginButton = new JButton("Log In");
+        loginButton.setFont(new Font("Verdana", Font.PLAIN, 18));
+        loginButton.setBackground(lightPink);
+        loginButton.setForeground(Color.BLACK);
+        // set size of button
+        loginButton.setMinimumSize(buttonDimensions);
+        loginButton.setPreferredSize(buttonDimensions);
+        // layout of button
+        setPosition(constraints, 7, 2, 1, new Insets(30, 0, 0, 0));
+        gbl.setConstraints(loginButton, constraints);
 
-         // Action Listener 
+        // Empty text box for error message when wrong password/username is entered 
+        JLabel wrongInput = new JLabel("", SwingConstants.CENTER);
+        wrongInput.setFont(new Font("Verdana", Font.PLAIN, 18));
+        setPosition(constraints, 8, 2, 1, new Insets(5, 0, 0, 0));
+        gbl.setConstraints(wrongInput, constraints);
+
+        // Action Listener
         InterfaceController actionListener = new InterfaceController(frame);
-        actionListener.sendLoginPanel(this, inputUsername, inputPassword);
-        // Action listener of button 
+        actionListener.sendLoginPanel(this, inputUsername, inputPassword, wrongInput);
+        // Action listener of button
         loginButton.setActionCommand("loginButton");
         loginButton.addActionListener(actionListener);
 
-        // Add to panel 
+        // Add to panel
         add(logoContainer);
         add(signInLabel);
         add(usernameLabel);
+        add(inputUsername);
         add(passwordLabel);
         add(inputPassword);
         add(loginButton);
+        add(wrongInput);
 
     }
-
 
 }
