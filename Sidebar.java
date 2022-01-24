@@ -11,9 +11,9 @@ import java.awt.Font;
 public class Sidebar extends JPanel {
 
     // Logo
-    private BufferedImage logo;
+    private BufferedImage logo, dashboardImage, patientImage, roomImage;
 
-    public void SidePanel(JFrame frame, String secondPanel){
+    public Sidebar(JFrame frame, String secondPanel){
 
         setSize(200, 800);
 
@@ -24,6 +24,32 @@ public class Sidebar extends JPanel {
         // Logo 
         try {
             logo = ImageIO.read(getClass().getResource("Images/CovidCaptorSakuraSmall.png"));
+
+            patientImage = ImageIO.read(getClass().getResource("Images/PatientWhite.png"));
+            roomImage = ImageIO.read(getClass().getResource("Images/RoomWhite.png"));
+            dashboardImage = ImageIO.read(getClass().getResource("Images/DashboardWhite.png"));
+
+            if(secondPanel.equals("patient")){
+                patientImage = ImageIO.read(getClass().getResource("Images/PatientRed.png"));
+            }
+            else if(secondPanel.equals("room")){
+                roomImage = ImageIO.read(getClass().getResource("Images/RoomRed.png"));
+            }
+            else if(secondPanel.equals("dashboard")){
+                dashboardImage = ImageIO.read(getClass().getResource("Images/DashboardRed.png"));
+            }
+
+            JLabel patientContainer = new JLabel(new ImageIcon(patientImage));
+            patientContainer.setBounds(0, 197, patientContainer.getPreferredSize().width, patientContainer.getPreferredSize().height);
+            add(patientContainer);
+
+            JLabel roomContainer = new JLabel(new ImageIcon(roomImage));
+            roomContainer.setBounds(0, 247, roomContainer.getPreferredSize().width, roomContainer.getPreferredSize().height);
+            add(roomContainer);
+            
+            JLabel dashboardContainer = new JLabel(new ImageIcon(dashboardImage));
+            dashboardContainer.setBounds(0, 147, dashboardContainer.getPreferredSize().width, dashboardContainer.getPreferredSize().height);
+            add(dashboardContainer);
         } catch (IOException e){
 
             e.printStackTrace();
@@ -35,9 +61,9 @@ public class Sidebar extends JPanel {
         add(logoContainer);
 
         // Size/position of the buttons 
-        int buttonIndent = 40;
+        int buttonIndent = 50;
         int buttonHeight = 150;
-        int buttonSpacing = 10;
+        int buttonSpacing = 20;
 
         // TAB BUTTONS
         
@@ -67,6 +93,20 @@ public class Sidebar extends JPanel {
         // layout
         size = roomsButton.getPreferredSize();
         roomsButton.setBounds(buttonIndent, buttonHeight + (buttonSpacing + size.height)*2, size.width, size.height);
+
+
+        // Getting database information for the dashboard 
+        DatabaseController databaseController = new DatabaseController();
+        // patient #
+        String username = databaseController.getUsername();
+
+
+        // Textbox for username 
+        JLabel usernameTextbox = new JLabel("Username: " + username);
+        usernameTextbox.setFont(new Font("Verdana", Font.PLAIN, 14));
+        size = usernameTextbox.getPreferredSize();
+        usernameTextbox.setBounds(20, 700, size.width, size.height);
+
         
         // Colour of button text depends on which page is clicked 
             // ex. if user pressed the Patient page, then the patient button would be red 
@@ -93,6 +133,7 @@ public class Sidebar extends JPanel {
         add(dashboardButton);
         add(patientButton);
         add(roomsButton);
+        add(usernameTextbox);
 
         //Action Listener for buttons
         InterfaceController sidebarController = new InterfaceController(frame);

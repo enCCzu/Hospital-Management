@@ -6,6 +6,7 @@ public class CredentialsDatabase extends Databases {
     // Declaring and initializing variables/objects related to the User Credentials Database 
     private final String USER_LIST = "User_List.csv";
     private HashMap<String, String> loginInfo = new HashMap<String, String>();
+    private String loggedInUsername = "";
 
     /**
      * Checks to see if the entered username and password matches with the database 
@@ -20,7 +21,11 @@ public class CredentialsDatabase extends Databases {
 
             if (loginInfo.get(username) != null){
 
-                return loginInfo.get(username).equals(password);// checks if the password of the username in the database matches with the entered password
+                if(loginInfo.get(username).equals(password)){// checks if the password of the username in the database matches with the entered password
+
+                    loggedInUsername = username;
+                    return true;
+                }
 
             }
             else {
@@ -43,6 +48,15 @@ public class CredentialsDatabase extends Databases {
 
         hashMapToCSV(loginInfo, USER_LIST);
 
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public String getUsername(){
+        
+        return loggedInUsername;
     }
 
     /**

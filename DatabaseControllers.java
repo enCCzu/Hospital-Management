@@ -87,4 +87,13 @@ abstract class DatabaseControllers {
         return roomDatabase.getAvailableBeds();
     }
 
+    /**
+     * 
+     * @return
+     */
+    protected String getUsername(){
+
+        return credentialsDatabase.getUsername();
+    }
+
 }
