@@ -16,13 +16,15 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     private LoginPanel loginPanel; 
     private JTextField username;
     private JPasswordField password; 
+    private JLabel errorMessage; 
 
 
-    public void sendLoginPanel(LoginPanel panel, JTextField inputUsername, JPasswordField inputPassword){
+    public void sendLoginPanel(LoginPanel panel, JTextField inputUsername, JPasswordField inputPassword, JLabel wrongInput){
 
         loginPanel = panel; 
         username = inputUsername;
         password = inputPassword;
+        errorMessage = wrongInput;
 
     }
 
@@ -59,11 +61,21 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
             }
 
+            else {
+
+                System.out.println("Password not right");
+
+                errorMessage.setText("Username or password is incorrect");
+
+                refreshPanel(loginPanel);
+
+            }
+
+            refreshFrame(window);
 
 
             // Add new panels to the window 
             //window.getContentPane().add(new Sidebar)
-            window.getContentPane().add(new JButton("Hello")); 
 
         }
         
