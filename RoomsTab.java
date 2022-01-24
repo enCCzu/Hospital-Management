@@ -31,7 +31,7 @@ public class RoomsTab extends JPanel{
         size = addButton.getPreferredSize();
         addButton.setBounds(500, 130, size.width + 70, size.height);
 
-        //Add elements to panel
+        //Add components to panel
         add(titleLabel);
         add(editButton);
         add(addButton);

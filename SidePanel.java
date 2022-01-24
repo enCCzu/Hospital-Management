@@ -20,6 +20,7 @@ public class SidePanel extends JPanel{
         constraints.insets = padding;
     }
 
+    //Constructor
     public SidePanel(JFrame frame, String secondPanel){
         // JPanel logoPanel = new JPanel();
         // JPanel patientPanel = new JPanel();
