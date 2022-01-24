@@ -102,9 +102,9 @@ public class Room extends JPanel {
 
         // Initializing the JTable
         roomTable.setRowSorter(rowSorter);
-        roomTable.setBounds(250, 75, 800, 600);
+        roomTable.setBounds(250, 75, 900, 600);
         scrollPane = new JScrollPane(roomTable);
-        scrollPane.setBounds(225, 100, 700, 600);
+        scrollPane.setBounds(225, 100, 800, 600);
 
         //Table Color adjustment
         roomTable.setBackground(beige);
