@@ -11,6 +11,8 @@ import java.awt.Font;
 
 public class SidePanel extends JPanel{
 
+    private BufferedImage logo;
+
     private void setPosition(GridBagConstraints constraints, int row, int column, int spanColumn, Insets padding){ // figure out padding or anchor? 
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -30,12 +32,6 @@ public class SidePanel extends JPanel{
         //setMinimumSize(null);
         //setMaximumSize(panelSize);
         setSize(200, 800);
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        GridBagLayout gbl = new GridBagLayout(); 
-        setLayout(gbl);
-
-        GridBagConstraints constraints = new GridBagConstraints();
 
         //logoPanel.setLocation(0,0);
 
@@ -44,32 +40,67 @@ public class SidePanel extends JPanel{
         TestActionListener actionListener = new TestActionListener(frame);
 
         // //  Top Label
-        // JLabel logoLabel = new JLabel("CovidCaptor Sakura"); 
-        // logoLabel.setBounds(0,0,80,30);
-        // add(logoLabel);
+        try {
+            logo = ImageIO.read(getClass().getResource("Images/CovidCaptorSakuraSmall.png"));
+            JLabel logoContainer = new JLabel(new ImageIcon(logo));
+            logoContainer.setBounds(0, 20, logoContainer.getPreferredSize().width, logoContainer.getPreferredSize().height);
+            add(logoContainer);
+        } catch (IOException e){
+
+            e.printStackTrace();
+        }
+
+
+        setLayout(null);
+
+        int buttonIndent = 40;
+        int buttonHeight = 150;
+        int buttonSpacing = 10;
 
         // Tab Buttons
+        JButton dashboardButton = new JButton("Dashboard"); 
+        dashboardButton.setFont(new Font("Verdana", Font.PLAIN, 24));
+        Dimension size = dashboardButton.getPreferredSize();
+        dashboardButton.setBounds(buttonIndent, buttonHeight, size.width, size.height);
+        dashboardButton.setBackground(Color.PINK);
+        dashboardButton.setBorder(null);
+
         JButton patientButton = new JButton("Patient"); 
-        setPosition(constraints, 1, 0, 1, new Insets(10,0,0,0));
-        gbl.setConstraints(patientButton, constraints);
+        patientButton.setFont(new Font("Verdana", Font.PLAIN, 24));
+        size = patientButton.getPreferredSize();
+        patientButton.setBounds(buttonIndent, buttonHeight + buttonSpacing + size.height, size.width, size.height);
+        patientButton.setBackground(Color.PINK);
+        patientButton.setBorder(null);
         
 
         JButton roomsButton = new JButton("Rooms");
-        setPosition(constraints, 2, 0, 1, new Insets(10,0,0,0));
-        gbl.setConstraints(roomsButton, constraints);
+        roomsButton.setFont(new Font("Verdana", Font.PLAIN, 24));
+        size = roomsButton.getPreferredSize();
+        roomsButton.setBounds(buttonIndent, buttonHeight + (buttonSpacing + size.height)*2, size.width, size.height);
+        roomsButton.setBackground(Color.PINK);
+        roomsButton.setBorder(null);
         
 
         if (secondPanel.equals("patient")){
 
-            patientButton.setBackground(Color.WHITE);
-            roomsButton.setBackground(Color.PINK); 
+            dashboardButton.setForeground(Color.WHITE);
+            patientButton.setForeground(Color.RED); 
+            roomsButton.setForeground(Color.WHITE);
         }
         else if(secondPanel.equals("rooms")){
 
-            patientButton.setBackground(Color.PINK);
-            roomsButton.setBackground(Color.WHITE); 
+            dashboardButton.setForeground(Color.WHITE);
+            patientButton.setForeground(Color.WHITE);
+            roomsButton.setForeground(Color.RED); 
+        }
+        else if(secondPanel.equals("dashboard")){
+
+            dashboardButton.setForeground(Color.RED);
+            patientButton.setForeground(Color.WHITE);
+            roomsButton.setForeground(Color.WHITE); 
         }
 
+        add(dashboardButton);
         add(patientButton);
         add(roomsButton);
 
