@@ -18,7 +18,13 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     private JPasswordField password; 
     private JLabel errorMessage; 
 
-
+    /**
+     * Saves the Login information that the user entered
+     * @param panel Login Panel being sent
+     * @param inputUsername Username the user entered
+     * @param inputPassword Password the user entered
+     * @param wrongInput Invalid input message
+     */
     public void sendLoginPanel(LoginPanel panel, JTextField inputUsername, JPasswordField inputPassword, JLabel wrongInput){
 
         loginPanel = panel; 
@@ -28,6 +34,10 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
     }
 
+    /**
+     * Called by the view to update the frame
+     * Adds the sidebar and dashboard
+     */
     private void dashboardPage(){
 
         // window.getContentPane().add(new Sidebar)
@@ -35,6 +45,10 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
     }
 
+    /**
+     * Constructor for the interface controller
+     * @param frame frame being saved
+     */
     public InterfaceController(JFrame frame){
 
         window = frame; 
@@ -42,6 +56,11 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     }
 
     @Override
+    /**
+     * Takes in the actions performed 
+     * Performs an action when a button is clicked
+     * @param e action that occurred
+     */
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand(); 
 
