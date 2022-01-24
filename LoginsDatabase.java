@@ -54,6 +54,7 @@ public class LoginsDatabase extends Databases {
 
     }
 
+    // constructor - reads file and stores info
     public LoginsDatabase() {
 
         csvToArrayList(loginInfo, LOGIN_LIST);

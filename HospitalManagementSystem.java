@@ -13,6 +13,7 @@ public class HospitalManagementSystem {
     }
 
 
+    // Main method 
     public static void main(String[] args) {
 
 

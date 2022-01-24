@@ -1,6 +1,4 @@
 //imports 
-import java.io.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 abstract class DatabaseControllers {
@@ -54,8 +52,6 @@ abstract class DatabaseControllers {
 
         return table;
     }
-
-
 
     /**
      * Called by dashboard
@@ -129,6 +125,17 @@ abstract class DatabaseControllers {
     public void savePatientData(ArrayList<ArrayList<String>> arrayList){
 
         patientDatabase.saveData(arrayList);
+
+    }
+
+    /**
+     * Called by view to save the room information
+     * Calls model method to save to csv
+     * @param arrayList ArrayList to be saved to csv
+     */
+    public void saveRoomData(ArrayList<ArrayList<String>> arrayList){
+
+        roomDatabase.saveData(arrayList);
 
     }
     

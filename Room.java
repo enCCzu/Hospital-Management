@@ -1,7 +1,5 @@
-
-// imports 
-import java.util.ArrayList;
-import javax.swing.*; 
+// imports
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -9,30 +7,25 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.event.*;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.awt.Color;
-import java.awt.Insets;
+import java.util.ArrayList;
 
-public class Patient extends JPanel {
+public class Room extends JPanel {
 
-    // Creating database controller to pull data from database 
-    private DatabaseController controller = new DatabaseController();
-    private ArrayList<ArrayList<String>> patientDataList = controller.getPatientTable();
-    private String[][] patientDataArray = controller.arrayListToArray(patientDataList);
-
-    // Buttons for JTable to edit and add to the table
-    private JButton deleteButton = new JButton();
+    //Buttons to remove and add to the table
     private JButton addButton = new JButton();
-    private JButton arrowButton = new JButton();
+    private JButton deleteButton = new JButton();
 
-    // Creating JTable
+    // Creating JTable 
+    private String[] columnNames = {"Room #", "# of Beds", "Beds Available", "Type of Room"};
 
-    private String[] columnNames = {"Health Card", "Name", "Age", "Diagnosis", "Description"};
+    private DatabaseController controller = new DatabaseController();
+    private ArrayList<ArrayList<String>> roomDataList = controller.getRoomTable();
+    private String[][] roomDataArray = controller.arrayListToArray(roomDataList);
+        
 
-    private DefaultTableModel model = new DefaultTableModel(patientDataArray, columnNames){
+    private DefaultTableModel model = new DefaultTableModel(roomDataArray, columnNames){
 
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -40,53 +33,52 @@ public class Patient extends JPanel {
            return false;
         }
     };
+    private JTable roomTable = new JTable(model);
+
+    private JScrollPane scrollPane = new JScrollPane(roomTable);
     
-    private JTable patientTable = new JTable(model);
-    private JScrollPane scrollPane = new JScrollPane(patientTable);
-    // Sort table
-    private TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(patientTable.getModel());
+    private TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(roomTable.getModel());
+
     private JTextField jtfFilter = new JTextField();
+
 
     // Color Variables
     private Color rosePink = new Color(255, 105, 105);
     private Color beige = new Color(246, 245, 225);
     private Color unbleachedSilk = new Color(255, 216, 204);
     private Color erinColor = new Color(225, 242, 255);
-
-
+   
     /**
      * Adds all JLabels and JButtons to the panel
      * Sets sizes and location
      */
     public void setElementAttributes(){
-        //Panel 
+        //Size of Window
         setSize(900, 800);
         setBackground(erinColor);
         setLayout(null);
 
-        // Title of page 
-        JLabel titleLabel = new JLabel("<html>"+"Patients"+"</html>", JLabel.RIGHT);
-        titleLabel.setFont(new Font("Verdana", Font.PLAIN, 35));
+        //Top label (title) font and placement
+        JLabel titleLabel = new JLabel("<html>"+"Rooms"+"</html>", JLabel.RIGHT);
+        titleLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         titleLabel.setForeground(rosePink);
-        // position
+        //position 
         Dimension size = titleLabel.getPreferredSize();
         titleLabel.setBounds(225, 20, size.width, size.height);
-
-        // Read and use images for add and delete row buttons
+        
+        //Read and use images for add and delete row buttons
         try {
-            BufferedImage addImage = ImageIO.read(getClass().getResource("Images/add.png"));
+            Image addImage = ImageIO.read(getClass().getResource("Images/add.png"));
             addButton.setIcon(new ImageIcon(addImage));
 
-            BufferedImage minusImage = ImageIO.read(getClass().getResource("Images/minus.png"));
+            Image minusImage = ImageIO.read(getClass().getResource("Images/minus.png"));
             deleteButton.setIcon(new ImageIcon(minusImage));
-        } catch (Exception e) {
-
-            System.out.println("Images required. Please do not steal the images.");
-            System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex);
 
         }
 
-        // Edit button and placement
+        //Edit button and placement
         size = deleteButton.getPreferredSize();
         deleteButton.setBounds(225, 705, 30, 30);
         // to remote the spacing between the image and button's borders
@@ -96,7 +88,7 @@ public class Patient extends JPanel {
         // to remove the border
         deleteButton.setBorder(null);
 
-        // Add button and placement
+        //Add button and placement
         size = addButton.getPreferredSize();
         addButton.setBounds(275, 705, 30, 30);
         addButton.setMargin(new Insets(0, 0, 0, 0));
@@ -104,32 +96,30 @@ public class Patient extends JPanel {
         addButton.setBackground(Color.WHITE);
         // to remove the border
         addButton.setBorder(null);
-
-        // JTable filter
+        
+        // JTable filter 
         jtfFilter.setBounds(225,75,200,20);
-        
-        // Initializing the JTable
-        patientTable.setRowSorter(rowSorter);
-        patientTable.setBounds(250, 75, 900, 600);
-        scrollPane = new JScrollPane(patientTable);
-        scrollPane.setBounds(225, 100, 800, 600);
-        
-        //Table Color adjustment
-        patientTable.setBackground(beige);
-        JTableHeader header = patientTable.getTableHeader();
-        header.setBackground(unbleachedSilk);
 
-        // add to panel 
+        // Initializing the JTable
+        roomTable.setRowSorter(rowSorter);
+        roomTable.setBounds(250, 75, 800, 600);
+        scrollPane = new JScrollPane(roomTable);
+        scrollPane.setBounds(225, 100, 700, 600);
+
+        //Table Color adjustment
+        roomTable.setBackground(beige);
+        JTableHeader header = roomTable.getTableHeader();
+        header.setBackground(unbleachedSilk);   
+        
+        //Add elements to panel
         add(titleLabel);
         add(deleteButton);
         add(addButton);
         add(scrollPane);
         add(jtfFilter);
-        
     }
 
     /**
-     * 
      * @param jtfFilter
      */
     public void createTableFilter(JTextField jtfFilter){
@@ -171,13 +161,12 @@ public class Patient extends JPanel {
      */
     public void createNewRow(){
 
-        // JTextFields for user to input information 
-        JTextField healthCardField = new JTextField();
-        JTextField nameField = new JTextField();
-        JTextField ageField = new JTextField();
-        JTextField diagnosisField = new JTextField();
-        JTextField descriptionField = new JTextField();
-
+        // JTextFields for user to input information
+        JTextField roomNumField = new JTextField();
+        JTextField bedNumField = new JTextField();
+        JTextField bedsAvailField = new JTextField();
+        JTextField roomTypeField = new JTextField();
+        
         // Objects within the popup 
         JPanel addRowPopup = new JPanel();
         // Layout
@@ -185,31 +174,28 @@ public class Patient extends JPanel {
         addRowPopup.add(Box.createRigidArea(new Dimension(2,2)));
 
         // Adding objects to popup (text and textfields)
-        addRowPopup.add(new JLabel("Patient Health Card:"));
-        addRowPopup.add(healthCardField);
-        addRowPopup.add(new JLabel("Patient Name:"));
-        addRowPopup.add(nameField);
+        addRowPopup.add(new JLabel("Room #"));
+        addRowPopup.add(roomNumField);
+        addRowPopup.add(new JLabel("# of Beds"));
+        addRowPopup.add(bedNumField);
         addRowPopup.add(Box.createHorizontalStrut(15)); // a spacer
-        addRowPopup.add(new JLabel("Patient Age:"));
-        addRowPopup.add(ageField);
-        addRowPopup.add(new JLabel("Diagnosis:"));
-        addRowPopup.add(diagnosisField);
-        addRowPopup.add(new JLabel("Description"));
-        addRowPopup.add(descriptionField);
+        addRowPopup.add(new JLabel("Beds Available:"));
+        addRowPopup.add(bedsAvailField);
+        addRowPopup.add(new JLabel("Type of Room:"));
+        addRowPopup.add(roomTypeField);
 
         //Array to store text 
-        String[] storedText = new String[5];
+        String[] storedText = new String[4];
 
         // Creating popup container
-        int result = JOptionPane.showConfirmDialog(null, addRowPopup, "Please enter the patient's information", JOptionPane.OK_CANCEL_OPTION);
-        // If user presses OK 
+        int result = JOptionPane.showConfirmDialog(null, addRowPopup, "Please enter the room information", JOptionPane.OK_CANCEL_OPTION);
+        // If user presses OK
         if (result == JOptionPane.OK_OPTION) {
             // Get text 
-            storedText[0] = healthCardField.getText();
-            storedText[1] = nameField.getText();
-            storedText[2] = ageField.getText();
-            storedText[3] = diagnosisField.getText();
-            storedText[4] = descriptionField.getText();
+            storedText[0] = roomNumField.getText();
+            storedText[1] = bedNumField.getText();
+            storedText[2] = bedsAvailField.getText();
+            storedText[3] = roomTypeField.getText();
             // add row to the model (table)
             model.addRow(storedText);
 
@@ -218,10 +204,10 @@ public class Patient extends JPanel {
             for(int i = 0;i < storedText.length; i++){
                 newRow.add(storedText[i]);
             }
-            patientDataList.add(newRow);
+            roomDataList.add(newRow);
 
             // Send new data to controller to be saved in the database 
-            controller.savePatientData(patientDataList);
+            controller.saveRoomData(roomDataList);; 
         }
     }
 
@@ -233,10 +219,10 @@ public class Patient extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                int row = patientTable.getSelectedRow();
-                model.removeRow(patientTable.getSelectedRow());
-                patientDataList.remove(row);
-                controller.patientDatabase.arrayListToCSV(patientDataList, "Patient_List.csv");
+                int row = roomTable.getSelectedRow();
+                model.removeRow(roomTable.getSelectedRow());
+                roomDataList.remove(row);
+                controller.roomDatabase.arrayListToCSV(roomDataList, "Room_List.csv");
 
                 
             }
@@ -252,6 +238,7 @@ public class Patient extends JPanel {
             }
 
         });
+
     }
 
     /**
@@ -263,18 +250,18 @@ public class Patient extends JPanel {
         String cellEdit = JOptionPane.showInputDialog(null, "What should this cell be changed to?");
         if(cellEdit != null){
             model.setValueAt(cellEdit, row, column);
-            patientDataList.get(row).set(column, cellEdit);
-            controller.savePatientData(patientDataList);;
+            roomDataList.get(row).set(column, cellEdit);
+            controller.saveRoomData(roomDataList);
         }
         
     }
 
     /**
      * Listens to mouse clicks on a cell
-     * @param patientTable table being clicked
+     * @param roomTable table being clicked
      */
-    public void createCellListener(JTable patientTable){
-        patientTable.addMouseListener(new MouseAdapter() {
+    public void createCellListener(JTable roomTable){
+        roomTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !e.isConsumed()) {
                     e.consume();
@@ -283,31 +270,44 @@ public class Patient extends JPanel {
                     int row = target.getSelectedRow();
                     int column = target.getSelectedColumn();
 
+
+                    System.out.println(row);
+                    System.out.println(column);
                     editCell(row,column);
                }
             }
           });
     }
 
-    // Constructor
-    public Patient() {
-        // Size of Window
-        setSize(900, 800);
+    /**
+     * 
+     * @param valueAt
+     * @return
+     */
+    private String checkForNull(Object valueAt) {
+        String stringValue;
+        if(valueAt != null){
+            stringValue = valueAt.toString();
+            return stringValue;
+        }
+        return "";
+    }
 
-        // Table 
-        patientTable.getTableHeader().setResizingAllowed(true);
-        patientTable.getTableHeader().setReorderingAllowed(false);
+    //Constructor
+    public Room() {
+
+        roomTable.getTableHeader().setResizingAllowed(true);
+        roomTable.getTableHeader().setReorderingAllowed(false);
 
         for(int i = 0; i < columnNames.length; i++){
             rowSorter.setSortable(i, false);
         }
         
-        // Methods to run panel 
         setElementAttributes();
         createTableFilter(jtfFilter);
-        createCellListener(patientTable);
+        createCellListener(roomTable);
         createButtonListener();
+    }     
 
-    }
 
 }

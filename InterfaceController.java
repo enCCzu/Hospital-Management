@@ -1,6 +1,5 @@
 //imports 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; 
@@ -65,7 +64,7 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     private void roomPage(){
 
         window.getContentPane().add(new Sidebar(window, "room"));
-        //window.getContentPane().add(new Room());
+        window.getContentPane().add(new Room());
 
     }
 
@@ -127,19 +126,23 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
         // pressing patient button 
         if (command.equals("patientTab")){
 
+            // removes panels from frame 
             window.getContentPane().removeAll();
 
+            // Adds the correct panels to frame 
             patientPage();
 
             refreshFrame(window);
 
         }
 
-
+        // pressing room button
         else if (command.equals("roomsTab")){
 
+            // removes panels from frame 
             window.getContentPane().removeAll();
 
+            // Adds the correct panels to frame
             roomPage();
 
             refreshFrame(window);
@@ -147,10 +150,13 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
         }
 
+        // pressing dashboard button 
         else if (command.equals("dashboardTab")){
 
+            // removes panels from frame 
             window.getContentPane().removeAll();
 
+            // Adds the correct panels to frame
             dashboardPage();
 
             refreshFrame(window);

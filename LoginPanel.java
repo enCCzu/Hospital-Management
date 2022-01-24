@@ -9,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Color;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 
@@ -19,14 +18,7 @@ public class LoginPanel extends JPanel {
     private BufferedImage logo;
 
     // Color Variables
-    private Color rosePink = new Color(255, 105, 105);
     private Color lightPink = new Color(255, 186, 179);
-    private Color beige = new Color(246, 245, 225);
-    private Color unbleachedSilk = new Color(255, 216, 204);
-    private Color peachPink = new Color(249, 215, 214);
-    private Color snowPink = new Color(255, 239, 237);
-    private Color platinum = new Color(237, 246, 255);
-    private Color steelBlue = new Color(176, 193, 219);
     private Color erinBlue = new Color(225, 242, 255);
 
     /**
@@ -62,8 +54,10 @@ public class LoginPanel extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
 
         // Logo image
+        JLabel logoContainer = new JLabel();
         try {
             logo = ImageIO.read(new File("Images/CovidCaptorSakura.png"));
+            logoContainer = new JLabel(new ImageIcon(logo));
         }
 
         catch (IOException e) {
@@ -72,8 +66,6 @@ public class LoginPanel extends JPanel {
             e.printStackTrace();
         }
 
-        // Adding logo 
-        JLabel logoContainer = new JLabel(new ImageIcon(logo));
         // layout of logo image
         setPosition(constraints, 0, 0, 3, new Insets(0, 0, 0, 0));
         gbl.setConstraints(logoContainer, constraints);

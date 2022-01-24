@@ -19,6 +19,18 @@ public class RoomDatabase extends Databases {
 
     }
 
+    /**
+     * Allows controller to send a table to the database to be stored 
+     * @param table is the table data to be stored 
+     */
+    public void saveData(ArrayList<ArrayList<String>> table){
+
+        roomInfo = table; 
+
+        arrayListToCSV(roomInfo, ROOM_LIST);
+
+    }
+
 
     /**
      * Is called by a controller. This method calls the Database method 'addRow' to add another row to the room ArrayList

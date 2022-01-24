@@ -18,12 +18,6 @@ public class Dashboard extends JPanel {
     // Color Variables
     private Color rosePink = new Color(255, 105, 105);
     private Color lightPink = new Color(255, 186, 179);
-    private Color beige = new Color(246, 245, 225);
-    private Color unbleachedSilk = new Color(255, 216, 204);
-    private Color peachPink = new Color(249, 215, 214);
-    private Color snowPink = new Color(255, 239, 237);
-    private Color platinum = new Color(237, 246, 255);
-    private Color steelBlue = new Color(176, 193, 219);
     private Color erinBlue = new Color(225, 242, 255);
 
     /**
@@ -66,9 +60,18 @@ public class Dashboard extends JPanel {
         title.setBounds(225, 20, size.width, size.height);
 
         // Creating icons
+        JLabel patientContainer = new JLabel();
+        JLabel roomContainer = new JLabel();
+
          try {
+            // Patient Icon
             patientIcon = ImageIO.read(new File("Images/patientIcon.png"));
+            patientContainer = new JLabel(new ImageIcon(patientIcon));
+
+            // Room Icon
             roomsIcon = ImageIO.read(new File("Images/roomIcon.png"));
+            roomContainer = new JLabel(new ImageIcon(roomsIcon));
+            
         }
 
         catch (IOException e) {
@@ -77,15 +80,11 @@ public class Dashboard extends JPanel {
             e.printStackTrace();
         }
 
-        // Patient Icon
-        JLabel patientContainer = new JLabel(new ImageIcon(patientIcon));
-        //layout
+        // patient logo layout
         size = patientContainer.getPreferredSize();
         patientContainer.setBounds(25, 25, size.width, size.height); //250,370
 
-        // Room Icon
-        JLabel roomContainer = new JLabel(new ImageIcon(roomsIcon));
-        //layout
+        // room logo layout
         size = roomContainer.getPreferredSize();
         roomContainer.setBounds(450, 25, size.width, size.height);
 
