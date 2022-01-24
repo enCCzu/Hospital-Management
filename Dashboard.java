@@ -68,42 +68,42 @@ public class Dashboard extends JPanel {
         title.setFont(new Font("Verdana", Font.PLAIN, 35));
         //layout
         size = title.getPreferredSize();
-        title.setBounds(250, 70, size.width, size.height);
+        title.setBounds(250, 70, size.width + 100, size.height);
 
         // Title of patient area of the dashboard 
         JLabel patientTitle = new JLabel("Patients");
         patientTitle.setFont(new Font("Verdana", Font.PLAIN, 30));
         //layout
-        size = patientTitle.getPreferredSize();
-        patientTitle.setBounds(300, 370, size.width, size.height);
+        size = patientTitle.getMaximumSize();
+        patientTitle.setBounds(300, 370, size.width + 100, size.height);
 
         // Text showing number of patients 
         JLabel patientNum = new JLabel(patients + " Patients");
         patientNum.setFont(new Font("Verdana", Font.PLAIN, 25));
         //layout
-        size = patientNum.getPreferredSize();
-        patientNum.setBounds(250, 470, size.width, size.height);
+        size = patientNum.getMaximumSize();
+        patientNum.setBounds(250, 470, size.width + 100, size.height);
 
         // Title of room area of the dashboard 
         JLabel roomTitle = new JLabel("Rooms");
         roomTitle.setFont(new Font("Verdana", Font.PLAIN, 30));
         //layout
-        size = roomTitle.getPreferredSize();
-        roomTitle.setBounds(700, 370, size.width, size.height);
+        size = roomTitle.getMaximumSize();
+        roomTitle.setBounds(700, 370, size.width + 100, size.height);
 
         // Text showing the number of rooms 
         JLabel roomNum = new JLabel(rooms + " Rooms");
         roomNum.setFont(new Font("Verdana", Font.PLAIN, 25));
         //layout
-        size = roomNum.getPreferredSize();
-        roomNum.setBounds(650, 470, size.width, size.height);
+        size = roomNum.getMaximumSize();
+        roomNum.setBounds(650, 470, size.width + 100, size.height);
 
         // Text showing total number of available beds 
         JLabel beds = new JLabel("Beds: " + availableBeds + "/" + totalBeds);
         beds.setFont(new Font("Verdana", Font.PLAIN, 25));
         //layout 
-        size = beds.getPreferredSize();
-        beds.setBounds(650, 570, size.width, size.height);
+        size = beds.getMaximumSize();
+        beds.setBounds(650, 570, size.width + 100, size.height);
 
         // Adding objects to panel 
         add(patientContainer);
