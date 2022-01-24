@@ -21,14 +21,17 @@ public class Sidebar extends JPanel {
 
         setLayout(null);
 
-        // Logo 
+        // Load Image Files 
         try {
+            //Logo File
             logo = ImageIO.read(getClass().getResource("Images/CovidCaptorSakuraSmall.png"));
-
+    
+            //All Tab Files
             patientImage = ImageIO.read(getClass().getResource("Images/PatientWhite.png"));
             roomImage = ImageIO.read(getClass().getResource("Images/RoomWhite.png"));
             dashboardImage = ImageIO.read(getClass().getResource("Images/DashboardWhite.png"));
 
+            //Use red variant for selected tab
             if(secondPanel.equals("patient")){
                 patientImage = ImageIO.read(getClass().getResource("Images/PatientRed.png"));
             }
@@ -39,6 +42,7 @@ public class Sidebar extends JPanel {
                 dashboardImage = ImageIO.read(getClass().getResource("Images/DashboardRed.png"));
             }
 
+            //Add Tab Images to Panel
             JLabel patientContainer = new JLabel(new ImageIcon(patientImage));
             patientContainer.setBounds(0, 197, patientContainer.getPreferredSize().width, patientContainer.getPreferredSize().height);
             add(patientContainer);
@@ -55,6 +59,7 @@ public class Sidebar extends JPanel {
             e.printStackTrace();
         }
         
+        //Add logo Image
         JLabel logoContainer = new JLabel(new ImageIcon(logo));
         //layout
         logoContainer.setBounds(0, 20, logoContainer.getPreferredSize().width, logoContainer.getPreferredSize().height);
