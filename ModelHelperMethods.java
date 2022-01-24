@@ -7,6 +7,11 @@ abstract class ModelHelperMethods {
     private BufferedReader readFile; 
     private String currentLine; 
 
+    /**
+     * Reads the csv file and turns it into an ArrayList
+     * @param table table that contains all the information
+     * @param file Name of file that is being read
+     */
     protected void csvToArrayList(ArrayList<ArrayList<String>> table, String file){
 
         try {
@@ -37,6 +42,11 @@ abstract class ModelHelperMethods {
 
     }
 
+    /**
+     * Reads the csv file and turns it into an HashMap
+     * @param hashMap HashMap containing user login information
+     * @param file Name of file that is being read
+     */
     protected void csvToHashMap(HashMap<String, String> hashMap, String file){
 
         try {
@@ -58,6 +68,10 @@ abstract class ModelHelperMethods {
 
     }
 
+    /**
+     * Converts HashMap to csv so that it can be saved to database
+     * @param userLogin User login information being saved
+     */
     protected void hashMapToCSV(HashMap<String,String> userLogin){
         try{
             // Initializing the File
@@ -84,7 +98,11 @@ abstract class ModelHelperMethods {
 
     }
 
-    // rewrite 
+    /**
+     * Saves the arrayList information to csv 
+     * @param table ArrayList of the information of that table
+     * @param tableName Table being saved to specific file
+     */
     protected  void arrayListToCSV(ArrayList<ArrayList<String>> table, String tableName){
         String line = "";
         try{
@@ -119,6 +137,11 @@ abstract class ModelHelperMethods {
         }
     }
 
+    /**
+     * Adds a row to the ArrayList and table and saves to csv
+     * @param table Table that is being added to
+     * @param listName Name of the table being added to
+     */
     protected void addRow(ArrayList<ArrayList<String>> table, String listName) {
 
         table.add(new ArrayList<String>());
@@ -127,12 +150,24 @@ abstract class ModelHelperMethods {
 
     }
 
+    /**
+     * Remove a specific row of the table
+     * @param table Table being removed from
+     * @param row Row index that is being removed
+     */
     protected void removeRow(ArrayList<ArrayList<String>> table, int row){
 
         table.remove(row);
 
     }
 
+    /**
+     * Edits the table and updates information
+     * @param table Table being edited
+     * @param row Specific row being edited
+     * @param column Specific column being edited
+     * @param change Information that has been changed
+     */
     protected void editTable(ArrayList<ArrayList<String>> table, int row, int column, String change){
 
 
