@@ -51,8 +51,8 @@ public class CredentialsDatabase extends Databases {
     }
     
     /**
-     * 
-     * @return
+     * Gets the username of the user 
+     * @return String of the username
      */
     public String getUsername(){
         
