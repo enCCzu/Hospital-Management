@@ -1,47 +1,60 @@
+
 // imports 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 // Abstract base class for databases 
 
 abstract class Databases {
 
-    // Declaring variables or objects used in file reading or writing 
-    private BufferedReader readFile; 
-    private BufferedWriter writeFile; 
-    private String currentLine; 
-
+    // Declaring variables or objects used in file reading or writing
+    private BufferedReader readFile;
+    private BufferedWriter writeFile;
+    private String currentLine;
 
     /**
-     * Reads csv file and creates a 2D String ArrayList to store the data 
-     * @param table is the ArrayList which the data is to be stored in 
-     * @param file is the name of the csv file to be read  
+     * Reads csv file and creates a 2D String ArrayList to store the data
+     * 
+     * @param table is the ArrayList which the data is to be stored in
+     * @param file  is the name of the csv file to be read
      */
-    protected void csvToArrayList(ArrayList<ArrayList<String>> table, String file){
+    protected void csvToArrayList(ArrayList<ArrayList<String>> table, String file) {
 
         try {
+            File checkFile = new File(file);
+            if (!checkFile.exists() || checkFile.isDirectory()) {
 
-            int counter = 0; 
+                System.out.println("Cannot find required file. Creating new database file.");
 
-            readFile = new BufferedReader(new FileReader(file));
+                writeFile = new BufferedWriter(new FileWriter(file));
 
-            while ((currentLine = readFile.readLine()) != null){
+                writeFile.write("");
 
-                String[] tempArray = currentLine.split("|!|");
-
-                table.add(new ArrayList<String>());
-                counter++; 
-
-                for (int i = 0; i < tempArray.length; i++){
-                    table.get(counter).add(i, tempArray[i]);
-                }
+                writeFile.close();
 
             }
 
-        }
-        catch (IOException e) {
+            int counter = 0;
+
+            readFile = new BufferedReader(new FileReader(file));
+
+            while ((currentLine = readFile.readLine()) != null) {
+
+                String[] tempArray = currentLine.split("\\|\\!\\|");
+
+                table.add(new ArrayList<String>());
+
+                for (int i = 0; i < tempArray.length; i++) {
+                    table.get(counter).add(tempArray[i]);
+                }
+
+                counter++;
+            }
+
+            readFile.close();
+
+        } catch (IOException e) {
 
             e.printStackTrace();
 
@@ -51,29 +64,41 @@ abstract class Databases {
 
     /**
      * Reads csv file and stores data into a HashMap
-     * @param hashMap is the hashmap that the data is stored in 
-     * @param file is the name of the file 
+     * 
+     * @param hashMap is the hashmap that the data is stored in
+     * @param file    is the name of the file
      */
-    protected void csvToHashMap(HashMap<String, String> hashMap, String file){
+    protected void csvToHashMap(HashMap<String, String> hashMap, String file) {
 
         try {
 
+            File checkFile = new File(file);
+            if (!checkFile.exists() || checkFile.isDirectory()) {
+
+                System.out.println("Cannot find required file. Creating new database file.");
+
+                writeFile = new BufferedWriter(new FileWriter(file));
+
+                writeFile.write("");
+
+                writeFile.close();
+
+            }
+
             readFile = new BufferedReader(new FileReader(file));
 
-            while ((currentLine = readFile.readLine()) != null){
+            while ((currentLine = readFile.readLine()) != null) {
 
-                String[] tempArray = currentLine.split("|!|");
+                String[] tempArray = currentLine.split("\\|\\!\\|");
 
-                if (tempArray.length == 2){
+                if (tempArray.length == 2) {
                     hashMap.put(tempArray[0], tempArray[1]);
-                }
-                else {
+                } else {
                     hashMap.put(tempArray[0], null);
                 }
             }
-
-        }
-        catch (IOException e) {
+            readFile.close();
+        } catch (IOException e) {
 
             e.printStackTrace();
         }
@@ -81,23 +106,23 @@ abstract class Databases {
     }
 
     /**
-     * Loops through HashMap to write csv file 
-     * @param hashMap is the HashMap that stores the data 
-     * @param file is the name of the csv file to be written
+     * Loops through HashMap to write csv file
+     * 
+     * @param hashMap is the HashMap that stores the data
+     * @param file    is the name of the csv file to be written
      */
-    protected void hashMapToCSV(HashMap<String, String> hashMap, String file){
+    protected void hashMapToCSV(HashMap<String, String> hashMap, String file) {
 
-        try{
+        try {
 
             // Initialing BufferedWriter
             writeFile = new BufferedWriter(new FileWriter(file));
 
             // Looping through Hashmap and writing to file
-            for(String i : hashMap.keySet()) {
-                if (hashMap.get(i) != null){
+            for (String i : hashMap.keySet()) {
+                if (hashMap.get(i) != null) {
                     writeFile.write(i + "|!|" + hashMap.get(i));
-                }
-                else {
+                } else {
                     writeFile.write(i);
                 }
                 writeFile.newLine();
@@ -105,53 +130,54 @@ abstract class Databases {
 
             // Close file writer
             writeFile.close();
-        }
-        catch (IOException except)
-        {
+        } catch (IOException except) {
             except.printStackTrace();
         }
 
     }
 
     /**
-     * Loops through ArrayList to write csv file 
-     * @param table is the ArrayList that stores the data 
-     * @param file is the name of the csv file that needs to be written
-     */ 
-    protected  void arrayListToCSV(ArrayList<ArrayList<String>> table, String file){
-        try{
+     * Loops through ArrayList to write csv file
+     * 
+     * @param table is the ArrayList that stores the data
+     * @param file  is the name of the csv file that needs to be written
+     */
+    protected void arrayListToCSV(ArrayList<ArrayList<String>> table, String file) {
+        try {
             String line = "";
 
             // Initialing BufferedWriter
             writeFile = new BufferedWriter(new FileWriter(file));
 
-            // Looping through ArrayList 
-            for(ArrayList<String> i : table) {
-                //Looping through Array and setting the line
-                for(String j : i){
+            // Looping through ArrayList
+            for (ArrayList<String> i : table) {
+                // Looping through Array and setting the line
+                for (String j : i) {
                     line = line + j + "|!|";
                 }
-                //Writes to the file
-                writeFile.write(line.substring(0, line.length()-1));
+                // Writes to the file
+                if (line.length() >= 3){
+                    writeFile.write(line.substring(0, line.length() - 3));
+                }
                 writeFile.newLine();
 
-                //Resets the line
+                // Resets the line
                 line = "";
             }
 
             // Close file
             writeFile.close();
-        }
-        catch (IOException except)
-        {
+        } catch (IOException except) {
             except.printStackTrace();
         }
     }
 
     /**
-     * Add row to ArrayList (for example: adding a patient = adding a row to the ArrayList)
-     * @param table is the ArrayList that needs a new row 
-     * @param listName is the name of the file that pertains to the ArrayList's data 
+     * Add row to ArrayList (for example: adding a patient = adding a row to the
+     * ArrayList)
+     * 
+     * @param table    is the ArrayList that needs a new row
+     * @param listName is the name of the file that pertains to the ArrayList's data
      */
     protected void addRow(ArrayList<ArrayList<String>> table, String listName) {
 
@@ -162,12 +188,13 @@ abstract class Databases {
     }
 
     /**
-     * Removes a selected row from an ArrayList 
-     * @param table is the ArrayList that needs a row removed 
-     * @param row is the index of the row 
-     * @param listName is the name of the file that pertains to the ArrayList's data 
+     * Removes a selected row from an ArrayList
+     * 
+     * @param table    is the ArrayList that needs a row removed
+     * @param row      is the index of the row
+     * @param listName is the name of the file that pertains to the ArrayList's data
      */
-    protected void removeRow(ArrayList<ArrayList<String>> table, int row, String listName){
+    protected void removeRow(ArrayList<ArrayList<String>> table, int row, String listName) {
 
         table.remove(row);
 
@@ -176,22 +203,21 @@ abstract class Databases {
     }
 
     /**
-     * Edits an element of the ArrayList 
-     * @param table is the ArrayList that needs to be edited 
-     * @param row is the index of the row of the element 
-     * @param column is the index of the column of the element 
-     * @param change is the String that the element should be changed to
-     * @param listName is the name of the file that pertains to the ArrayList's data 
+     * Edits an element of the ArrayList
+     * 
+     * @param table    is the ArrayList that needs to be edited
+     * @param row      is the index of the row of the element
+     * @param column   is the index of the column of the element
+     * @param change   is the String that the element should be changed to
+     * @param listName is the name of the file that pertains to the ArrayList's data
      */
-    protected void editTable(ArrayList<ArrayList<String>> table, int row, int column, String change, String listName){
-
+    protected void editTable(ArrayList<ArrayList<String>> table, int row, int column, String change, String listName) {
 
         table.get(row).set(column, change);
-        // get row and column from table 
+        // get row and column from table
 
         arrayListToCSV(table, listName);
 
     }
-
 
 }

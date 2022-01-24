@@ -1,26 +1,32 @@
+//Imports
 import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.io.File; 
 import java.io.IOException; 
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.Color;
 import java.awt.event.*;
 import java.awt.image.BufferedImage; 
 import java.awt.Font;
 
+
 public class LoginPanel extends JPanel{
+    
+    // Covidcaptor Sakura logo
+    private BufferedImage logo; 
 
-    private BufferedImage logo;
 
-    // @Override 
-    // public void paintComponent(Graphics g){
-
-    //     super.paintComponent(g);
-    //     g.drawImage(logo, 0, 0, this);
-
-    // }
-
+    /**
+     * 
+     * @param constraints
+     * @param row
+     * @param column
+     * @param spanColumn
+     * @param padding
+     */
     private void setPosition(GridBagConstraints constraints, int row, int column, int spanColumn, Insets padding){ // figure out padding or anchor? 
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -30,9 +36,14 @@ public class LoginPanel extends JPanel{
         constraints.insets = padding;
     }
 
+    /**
+     * 
+     * @param frame
+     */
     public LoginPanel(JFrame frame){
 
-        // Panel 
+
+        // Panel and Layout
 
         setBackground(Color.WHITE);
 
@@ -42,10 +53,11 @@ public class LoginPanel extends JPanel{
         GridBagConstraints constraints = new GridBagConstraints();
 
         // Action Listener 
-        TestActionListener actionListener = new TestActionListener(frame);
+        InterfaceController actionListener = new InterfaceController(frame);
         actionListener.sendLoginPanel(this);
 
-        // Logo 
+
+        // Logo image 
         try {
             logo = ImageIO.read(new File("CovidCaptorSakura.png"));
         } 
@@ -56,76 +68,85 @@ public class LoginPanel extends JPanel{
         }
 
         JLabel logoContainer = new JLabel(new ImageIcon(logo));
-        Dimension logoDimensions = new Dimension(351, 99);
-        logoContainer.setMinimumSize(logoDimensions);
-        logoContainer.setPreferredSize(logoDimensions);
+        // layout of logo image 
         setPosition(constraints, 0, 0, 3, new Insets(0,0,0,0));
         gbl.setConstraints(logoContainer, constraints);
-        add(logoContainer);
+
 
         // instructions 
         JLabel signInLabel = new JLabel("Sign In", SwingConstants.CENTER); 
         signInLabel.setFont(new Font("Verdana", Font.PLAIN, 32));
         signInLabel.setOpaque(true);
         signInLabel.setBackground(Color.PINK);
+        
+        // Layout of instructions 
         setPosition(constraints, 1, 2, 1, new Insets(30,0,0,0));
         constraints.ipady = 10;
         gbl.setConstraints(signInLabel, constraints);
-        add(signInLabel);
 
+        
+        // Size for text boxes 
         Dimension textBox = new Dimension(200, 30);
 
-        // username 
+        // Username text 
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        // layout of username text 
         setPosition(constraints, 2, 2, 1, new Insets(15,0,0,0));
         gbl.setConstraints(usernameLabel, constraints);
-        add(usernameLabel);
-
+        
+        // Username text box 
         JTextField inputUsername = new JTextField();
+        // size of text box 
+        inputUsername.setMinimumSize(textBox);
+        inputUsername.setPreferredSize(textBox);
+        // layout of username text box 
         setPosition(constraints, 4, 2, 1, new Insets(10,0,0,0));
         gbl.setConstraints(inputUsername, constraints);
 
-        inputUsername.setMinimumSize(textBox);
-        inputUsername.setPreferredSize(textBox);
-        add(inputUsername);
-
-        //password 
+        // Password text 
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        // layout of the password text
         setPosition(constraints, 5, 2, 1, new Insets(15,0,0,0));
         gbl.setConstraints(passwordLabel, constraints);
-        add(passwordLabel);
-
-
+        
+        // Password text box 
         JTextField inputPassword = new JTextField();
-        setPosition(constraints, 6, 2, 1, new Insets(10,0,0,0));
-        gbl.setConstraints(inputPassword, constraints);
-        add(inputPassword);
-
+        // size of text box 
         inputPassword.setMinimumSize(textBox);
         inputPassword.setPreferredSize(textBox);
+        // layout of password text box 
+        setPosition(constraints, 6, 2, 1, new Insets(10,0,0,0));
+        gbl.setConstraints(inputPassword, constraints);
 
-        // Login Button
-        Dimension buttonDimensions = new Dimension(100, 50);
+         // Login Button
+         Dimension buttonDimensions = new Dimension(100, 50);
 
-        JButton loginButton = new JButton("Log In");
-        loginButton.setActionCommand("loginButton");
-        loginButton.addActionListener(actionListener);
-        setPosition(constraints, 7, 2, 1, new Insets(30,0,0,0));
-        gbl.setConstraints(loginButton, constraints);
-        loginButton.setFont(new Font("Verdana", Font.PLAIN, 18));
-        loginButton.setBackground(Color.PINK);
-        loginButton.setForeground(Color.BLACK);
+         JButton loginButton = new JButton("Log In");
+         loginButton.setFont(new Font("Verdana", Font.PLAIN, 18));
+         loginButton.setBackground(Color.PINK);
+         loginButton.setForeground(Color.BLACK);
+         // set size of button 
+         loginButton.setMinimumSize(buttonDimensions);
+         loginButton.setPreferredSize(buttonDimensions);
+         // Action listener of button 
+         loginButton.setActionCommand("loginButton");
+         loginButton.addActionListener(actionListener);
+         // layout of button 
+         setPosition(constraints, 7, 2, 1, new Insets(30,0,0,0));
+         gbl.setConstraints(loginButton, constraints);
 
-        loginButton.setMinimumSize(buttonDimensions);
-        loginButton.setPreferredSize(buttonDimensions);
 
+        // Add to panel 
+        add(logoContainer);
+        add(signInLabel);
+        add(usernameLabel);
+        add(passwordLabel);
+        add(inputPassword);
         add(loginButton);
 
-        loginButton.addActionListener(actionListener);
-
-
     }
-    
+
+
 }
