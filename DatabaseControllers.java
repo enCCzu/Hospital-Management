@@ -14,10 +14,10 @@ abstract class DatabaseControllers {
     protected RoomDatabase roomDatabase = new RoomDatabase();
 
     /**
-     * 
-     * @param userName
-     * @param password
-     * @return
+     * Checks the username and password entered
+     * @param userName Username entered
+     * @param password Password entered
+     * @return boolean true if matches sytem
      */
     public boolean checkPassword(String userName, String password) {
 
@@ -25,8 +25,8 @@ abstract class DatabaseControllers {
     }
 
     /**
-     * 
-     * @return
+     * Gets and saves the patient table
+     * @return ArrayList of patient information
      */
     public ArrayList<ArrayList<String>> getPatientTable() {
 
@@ -37,8 +37,8 @@ abstract class DatabaseControllers {
 
 
     /**
-     * 
-     * @return
+     * Gets and saves the room table
+     * @return ArrayList of room information
      */
     public ArrayList<ArrayList<String>> getRoomTable() {
 
@@ -50,8 +50,8 @@ abstract class DatabaseControllers {
 
 
     /**
-     * 
-     * @return
+     * Gets the number of patients 
+     * @return int of number of patients
      */
     protected int getNumberOfPatients(){
 
@@ -60,8 +60,8 @@ abstract class DatabaseControllers {
     }
 
     /**
-     * 
-     * @return
+     * Gets the number of rooms
+     * @return int of number of rooms
      */
     protected int getNumberOfRooms(){
 
@@ -70,8 +70,8 @@ abstract class DatabaseControllers {
     }
 
     /**
-     * 
-     * @return
+     * Gets the total number of beds
+     * @return int of number of beds
      */
     protected int getTotalBeds(){
 
@@ -79,8 +79,8 @@ abstract class DatabaseControllers {
     }
 
     /**
-     * 
-     * @return
+     * Gets the number of available beds
+     * @return int of available beds
      */
     protected int getAvailableBeds(){
 
@@ -88,8 +88,8 @@ abstract class DatabaseControllers {
     }
 
     /**
-     * 
-     * @return
+     * Gets the username of the user
+     * @return String of username
      */
     protected String getUsername(){
 
