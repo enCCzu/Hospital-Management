@@ -8,6 +8,16 @@ public class HospitalManagementSystem {
 
     public HospitalManagementSystem(){
 
+        JFrame frame = new JFrame(); 
+
+        frame.setSize(1100,800);
+
+        frame.getContentPane().add(new Dashboard()); 
+
+        frame.repaint();
+        frame.revalidate();
+
+        frame.setVisible(true);
 
     }
 
