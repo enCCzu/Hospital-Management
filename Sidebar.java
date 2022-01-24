@@ -1,4 +1,3 @@
-
 // imports 
 import javax.swing.*;
 import javax.imageio.ImageIO;
@@ -31,30 +30,9 @@ public class Sidebar extends JPanel {
             roomImage = ImageIO.read(getClass().getResource("Images/RoomWhite.png"));
             dashboardImage = ImageIO.read(getClass().getResource("Images/DashboardWhite.png"));
 
-            //Use red variant for selected tab
-            if(secondPanel.equals("patient")){
-                patientImage = ImageIO.read(getClass().getResource("Images/PatientRed.png"));
-            }
-            else if(secondPanel.equals("room")){
-                roomImage = ImageIO.read(getClass().getResource("Images/RoomRed.png"));
-            }
-            else if(secondPanel.equals("dashboard")){
-                dashboardImage = ImageIO.read(getClass().getResource("Images/DashboardRed.png"));
-            }
-
-            //Add Tab Images to Panel
-            JLabel patientContainer = new JLabel(new ImageIcon(patientImage));
-            patientContainer.setBounds(0, 197, patientContainer.getPreferredSize().width, patientContainer.getPreferredSize().height);
-            add(patientContainer);
-
-            JLabel roomContainer = new JLabel(new ImageIcon(roomImage));
-            roomContainer.setBounds(0, 247, roomContainer.getPreferredSize().width, roomContainer.getPreferredSize().height);
-            add(roomContainer);
-            
-            JLabel dashboardContainer = new JLabel(new ImageIcon(dashboardImage));
-            dashboardContainer.setBounds(0, 147, dashboardContainer.getPreferredSize().width, dashboardContainer.getPreferredSize().height);
-            add(dashboardContainer);
         } catch (IOException e){
+
+            System.out.println("Image is missing. Who stole the images?");
 
             e.printStackTrace();
         }
@@ -113,28 +91,54 @@ public class Sidebar extends JPanel {
         usernameTextbox.setBounds(20, 700, size.width, size.height);
 
         
-        // Colour of button text depends on which page is clicked 
-            // ex. if user pressed the Patient page, then the patient button would be red 
-        if (secondPanel.equals("patient")){
+        // Use red variant depending on which page is clicked 
+            // ex. if user pressed the Patient page, then the patient button and logo would be red 
+        try {
+            if (secondPanel.equals("patient")){
 
-            dashboardButton.setForeground(Color.WHITE);
-            patientButton.setForeground(Color.RED); 
-            roomsButton.setForeground(Color.WHITE);
+                dashboardButton.setForeground(Color.WHITE);
+                patientButton.setForeground(Color.RED); 
+                roomsButton.setForeground(Color.WHITE);
+
+                patientImage = ImageIO.read(getClass().getResource("Images/PatientRed.png"));
+            }
+            else if(secondPanel.equals("room")){
+
+                dashboardButton.setForeground(Color.WHITE);
+                patientButton.setForeground(Color.WHITE);
+                roomsButton.setForeground(Color.RED); 
+
+                roomImage = ImageIO.read(getClass().getResource("Images/RoomRed.png"));
+            }
+            else if(secondPanel.equals("dashboard")){
+
+                dashboardButton.setForeground(Color.RED);
+                patientButton.setForeground(Color.WHITE);
+                roomsButton.setForeground(Color.WHITE); 
+
+                dashboardImage = ImageIO.read(getClass().getResource("Images/DashboardRed.png"));
+            }
         }
-        else if(secondPanel.equals("room")){
+        catch (IOException e){
 
-            dashboardButton.setForeground(Color.WHITE);
-            patientButton.setForeground(Color.WHITE);
-            roomsButton.setForeground(Color.RED); 
-        }
-        else if(secondPanel.equals("dashboard")){
+            System.out.println("Images are missing. Who stole the images?");
 
-            dashboardButton.setForeground(Color.RED);
-            patientButton.setForeground(Color.WHITE);
-            roomsButton.setForeground(Color.WHITE); 
         }
 
-        // Add to panel 
+        //Add Tab Images to Panel
+        JLabel patientContainer = new JLabel(new ImageIcon(patientImage));
+        patientContainer.setBounds(0, 197, patientContainer.getPreferredSize().width, patientContainer.getPreferredSize().height);
+
+        JLabel roomContainer = new JLabel(new ImageIcon(roomImage));
+        roomContainer.setBounds(0, 247, roomContainer.getPreferredSize().width, roomContainer.getPreferredSize().height);
+        
+        JLabel dashboardContainer = new JLabel(new ImageIcon(dashboardImage));
+        dashboardContainer.setBounds(0, 147, dashboardContainer.getPreferredSize().width, dashboardContainer.getPreferredSize().height);
+
+        // Add to panel
+        add(patientContainer);
+        add(roomContainer);
+        add(dashboardContainer);
         add(dashboardButton);
         add(patientButton);
         add(roomsButton);

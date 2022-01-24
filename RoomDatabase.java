@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RoomDatabase extends Databases {
 
     // Declaring and initializing variables/objects related to the room database  
-    private final String ROOM_LIST = "Room_List.csv";
+    private final String ROOM_LIST = "Databases/Room_List.csv";
     // Used ArrayList of ArrayLists instead of ArrayList of Arrays so optional features, such as: add column, are possible
     private ArrayList<ArrayList<String>> roomInfo = new ArrayList<ArrayList<String>>();
     
@@ -77,7 +77,15 @@ public class RoomDatabase extends Databases {
     protected int getAvailableBeds(){
         int availableBeds = 0;
         for(int i = 0; i < roomInfo.size(); i++){
-            availableBeds += Integer.parseInt(roomInfo.get(i).get(2));
+            try {
+                System.out.println(roomInfo.get(i).get(2));
+                availableBeds += Integer.parseInt(roomInfo.get(i).get(2));
+            }
+            catch (NumberFormatException e){
+
+                System.out.println("Who organized the data incorrectly?");
+
+            }
         }
 
         return availableBeds;

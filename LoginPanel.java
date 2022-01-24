@@ -52,14 +52,9 @@ public class LoginPanel extends JPanel{
 
         GridBagConstraints constraints = new GridBagConstraints();
 
-        // Action Listener 
-        InterfaceController actionListener = new InterfaceController(frame);
-        actionListener.sendLoginPanel(this);
-
-
         // Logo image 
         try {
-            logo = ImageIO.read(new File("CovidCaptorSakura.png"));
+            logo = ImageIO.read(new File("Images/CovidCaptorSakura.png"));
         } 
 
         catch (IOException e){
@@ -112,7 +107,7 @@ public class LoginPanel extends JPanel{
         gbl.setConstraints(passwordLabel, constraints);
         
         // Password text box 
-        JTextField inputPassword = new JTextField();
+        JPasswordField inputPassword = new JPasswordField();
         // size of text box 
         inputPassword.setMinimumSize(textBox);
         inputPassword.setPreferredSize(textBox);
@@ -130,13 +125,16 @@ public class LoginPanel extends JPanel{
          // set size of button 
          loginButton.setMinimumSize(buttonDimensions);
          loginButton.setPreferredSize(buttonDimensions);
-         // Action listener of button 
-         loginButton.setActionCommand("loginButton");
-         loginButton.addActionListener(actionListener);
          // layout of button 
          setPosition(constraints, 7, 2, 1, new Insets(30,0,0,0));
          gbl.setConstraints(loginButton, constraints);
 
+         // Action Listener 
+        InterfaceController actionListener = new InterfaceController(frame);
+        actionListener.sendLoginPanel(this, inputUsername, inputPassword);
+        // Action listener of button 
+        loginButton.setActionCommand("loginButton");
+        loginButton.addActionListener(actionListener);
 
         // Add to panel 
         add(logoContainer);

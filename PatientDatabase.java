@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class PatientDatabase extends Databases {
     
     // Declaring and initializing variables/objects related to the patient database  
-    private final String PATIENT_LIST = "Patient_List.csv";
+    private final String PATIENT_LIST = "Databases/Patient_List.csv";
     // Used ArrayList of ArrayLists instead of ArrayList of Arrays so optional features, such as: add column, are possible
     private ArrayList<ArrayList<String>> patientInfo = new ArrayList<ArrayList<String>>();
 
@@ -16,6 +16,18 @@ public class PatientDatabase extends Databases {
     public ArrayList<ArrayList<String>> getTable(){
 
         return patientInfo; 
+
+    }
+
+    /**
+     * Allows controller to send a table to the database to be stored 
+     * @param table is the table data to be stored 
+     */
+    public void saveData(ArrayList<ArrayList<String>> table){
+
+        patientInfo = table; 
+
+        arrayListToCSV(patientInfo, PATIENT_LIST);
 
     }
 
@@ -60,7 +72,7 @@ public class PatientDatabase extends Databases {
      * Called by a controller. Returns the number of patients 
      * @return # of patients in the database 
      */
-    protected int getNumberOfPatients(){
+    public int getNumberOfPatients(){
 
         return patientInfo.size();
 
