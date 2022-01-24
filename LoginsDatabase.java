@@ -22,8 +22,8 @@ public class LoginsDatabase extends Databases {
     }
 
     /**
-     * 
-     * @return
+     * Gets the recent login information
+     * @return Username of recent login
      */
     public String getRecentLogin(){
 
@@ -38,9 +38,9 @@ public class LoginsDatabase extends Databases {
     }
 
     /**
-     * 
-     * @param username
-     * @param date
+     * Saves the most recent login information
+     * @param username Username of user
+     * @param date Date it was accessed
      */
     public void saveRecentLogin(String username, String date){
 

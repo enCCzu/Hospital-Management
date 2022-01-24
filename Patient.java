@@ -60,7 +60,8 @@ public class Patient extends JPanel {
 
 
     /**
-     * 
+     * Adds all JLabels and JButtons to the panel
+     * Sets sizes and location
      */
     public void setElementAttributes(){
         //Panel 
@@ -170,7 +171,8 @@ public class Patient extends JPanel {
     }
 
     /**
-     * 
+     * Creates a new row of the table
+     * Saves added information
      */
     public void createNewRow(){
 
@@ -255,9 +257,9 @@ public class Patient extends JPanel {
     }
 
     /**
-     * 
-     * @param row
-     * @param column
+     * Edits the cell selected and saves it
+     * @param row row selected
+     * @param column column selected
      */
     public void editCell(int row, int column){
         String cellEdit = JOptionPane.showInputDialog(null, "What should this cell be changed to?");
@@ -270,8 +272,8 @@ public class Patient extends JPanel {
     }
 
     /**
-     * 
-     * @param patientTable
+     * Listens to mouse clicks on a cell
+     * @param patientTable table being clicked
      */
     public void createCellListener(JTable patientTable){
         patientTable.addMouseListener(new MouseAdapter() {

@@ -23,6 +23,9 @@ public class Sidebar extends JPanel {
     private Color steelBlue = new Color(176, 193, 219);
     private Color erinBlue = new Color(225, 242, 255);
 
+    /**
+     * Constructor Method for sidebar
+     */
     public Sidebar(JFrame frame, String secondPanel){
 
         setSize(200, 800);

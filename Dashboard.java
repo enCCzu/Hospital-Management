@@ -26,6 +26,9 @@ public class Dashboard extends JPanel {
     private Color steelBlue = new Color(176, 193, 219);
     private Color erinBlue = new Color(225, 242, 255);
 
+    /**
+     * Constructor Method to create dashboard panel
+     */
     public Dashboard() {
 
         // PANEL

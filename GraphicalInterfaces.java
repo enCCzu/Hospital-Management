@@ -4,8 +4,8 @@ import javax.swing.*;
 abstract class GraphicalInterfaces {
     
     /**
-     * 
-     * @param frame
+     * Refreshes the frame 
+     * @param frame JFrame to be refreshed
      */
     protected void refreshFrame(JFrame frame){
 
@@ -15,8 +15,8 @@ abstract class GraphicalInterfaces {
     }
 
     /**
-     * 
-     * @param panel
+     * Refreshes the panel
+     * @param panel JPanel to be refreshed
      */
     protected void refreshPanel(JPanel panel){
 
@@ -26,9 +26,9 @@ abstract class GraphicalInterfaces {
     }
 
     /**
-     * 
-     * @param frame
-     * @param panel
+     * Deconstructs the panel from the frame
+     * @param frame JFrame the panel will be removed from
+     * @param panel JPanel that will be removed
      */
     protected void deconstructPanel(JFrame frame, JPanel panel){
 
@@ -38,8 +38,8 @@ abstract class GraphicalInterfaces {
     }
 
     /**
-     * 
-     * @return
+     * Makes the frame that will be used
+     * @return JFrame that is used
      */
     protected JFrame makeFrame(){
 

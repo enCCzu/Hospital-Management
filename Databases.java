@@ -23,8 +23,10 @@ abstract class Databases {
 
         try {
             File checkFile = new File(file);
+            // Checks if file exists
             if (!checkFile.exists() || checkFile.isDirectory()) {
 
+                // If file does not exist then it makes one
                 System.out.println("Cannot find required file. Creating new database file.");
 
                 writeFile = new BufferedWriter(new FileWriter(file));
@@ -35,10 +37,12 @@ abstract class Databases {
 
             }
 
+            // Index of the Array
             int counter = 0;
-
+            // File reader
             readFile = new BufferedReader(new FileReader(file));
 
+            // Splits the line and saves each element to the ArrayList
             while ((currentLine = readFile.readLine()) != null) {
 
                 String[] tempArray = currentLine.split("\\|\\!\\|");
@@ -51,7 +55,7 @@ abstract class Databases {
 
                 counter++;
             }
-
+            // Close file reader
             readFile.close();
 
         } catch (IOException e) {
@@ -73,8 +77,10 @@ abstract class Databases {
         try {
 
             File checkFile = new File(file);
+            // Checks if the file exists
             if (!checkFile.exists() || checkFile.isDirectory()) {
 
+                // If the file does not exist then it makes one
                 System.out.println("Cannot find required file. Creating new database file.");
 
                 writeFile = new BufferedWriter(new FileWriter(file));
@@ -85,8 +91,10 @@ abstract class Databases {
 
             }
 
+            // File Reader
             readFile = new BufferedReader(new FileReader(file));
 
+            //Adds each username and password to the HashMap
             while ((currentLine = readFile.readLine()) != null) {
 
                 String[] tempArray = currentLine.split("\\|\\!\\|");
@@ -97,6 +105,7 @@ abstract class Databases {
                     hashMap.put(tempArray[0], null);
                 }
             }
+            // Closes file reader
             readFile.close();
         } catch (IOException e) {
 
@@ -144,6 +153,7 @@ abstract class Databases {
      */
     protected void arrayListToCSV(ArrayList<ArrayList<String>> table, String file) {
         try {
+            // Current line being written
             String line = "";
 
             // Initialing BufferedWriter

@@ -3,9 +3,9 @@ import javax.swing.*;
 
 public class HospitalManagementSystem {
     
-
-
-
+    /**
+     * Constructor Method
+     */
     public HospitalManagementSystem(){
 
         new UserInterface(); 

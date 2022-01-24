@@ -21,11 +21,11 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     private JLabel errorMessage; 
 
     /**
-     * 
-     * @param panel
-     * @param inputUsername
-     * @param inputPassword
-     * @param wrongInput
+     * Saves the Login information that the user entered
+     * @param panel Login Panel being sent
+     * @param inputUsername Username the user entered
+     * @param inputPassword Password the user entered
+     * @param wrongInput Invalid input message
      */
     public void sendLoginPanel(LoginPanel panel, JTextField inputUsername, JPasswordField inputPassword, JLabel wrongInput){
 
@@ -37,7 +37,8 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     }
 
     /**
-     * 
+     * Called by the view to update the frame
+     * Adds the sidebar and dashboard
      */
     private void dashboardPage(){
 
@@ -47,7 +48,8 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
     }
 
     /**
-     * 
+     * Called by the view to update the frame
+     * Adds the sidebar and patient
      */
     private void patientPage(){
 
@@ -56,6 +58,10 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
     }
 
+    /**
+     * Called by the view to update the frame
+     * Adds the sidebar and rooms
+     */
     private void roomPage(){
 
         window.getContentPane().add(new Sidebar(window, "room"));
@@ -65,8 +71,8 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
 
     /**
-     * 
-     * @param frame
+     * Constructor for the interface controller
+     * @param frame frame being saved
      */
     public InterfaceController(JFrame frame){
 
@@ -74,10 +80,12 @@ public class InterfaceController extends GraphicalInterfaces implements ActionLi
 
     }
 
-    /**
-     * 
-     */
     @Override
+    /**
+     * Takes in the actions performed 
+     * Performs an action when a button is clicked
+     * @param e action that occurred
+     */
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand(); 
 

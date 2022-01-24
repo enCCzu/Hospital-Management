@@ -18,6 +18,8 @@ abstract class DatabaseControllers {
     protected String loggedInUsername = "";
 
     /**
+     * Called by view
+     * Checks the model
      * Checks the username and password entered
      * @param userName Username entered
      * @param password Password entered
@@ -29,6 +31,7 @@ abstract class DatabaseControllers {
     }
 
     /**
+     * Called by view to get table from model
      * Gets and saves the patient table
      * @return ArrayList of patient information
      */
@@ -41,6 +44,7 @@ abstract class DatabaseControllers {
 
 
     /**
+     * Called by view to get table from model
      * Gets and saves the room table
      * @return ArrayList of room information
      */
@@ -54,6 +58,7 @@ abstract class DatabaseControllers {
 
 
     /**
+     * Called by dashboard
      * Gets the number of patients 
      * @return int of number of patients
      */
@@ -64,6 +69,7 @@ abstract class DatabaseControllers {
     }
 
     /**
+     * Called by dashboard
      * Gets the number of rooms
      * @return int of number of rooms
      */
@@ -74,6 +80,7 @@ abstract class DatabaseControllers {
     }
 
     /**
+     * Called by dashboard
      * Gets the total number of beds
      * @return int of number of beds
      */
@@ -83,6 +90,7 @@ abstract class DatabaseControllers {
     }
 
     /**
+     * Called by dashboard
      * Gets the number of available beds
      * @return int of available beds
      */
@@ -92,6 +100,7 @@ abstract class DatabaseControllers {
     }
 
     /**
+     * Called by sidebar
      * Gets the username of the user
      * @return String of username
      */
@@ -101,9 +110,10 @@ abstract class DatabaseControllers {
     }
 
     /**
-     * 
-     * @param arrayList
-     * @return
+     * Converts a 2D ArrayList to an 2DArray 
+     * 2DArray to be used as a table
+     * @param arrayList ArrayList to be converted
+     * @return 2DArray of information
      */
     public String[][] arrayListToArray(ArrayList<ArrayList<String>> arrayList){
         String[][] array = new String[arrayList.size()][];
@@ -112,15 +122,21 @@ abstract class DatabaseControllers {
     }
 
     /**
-     * 
-     * @param arrayList
+     * Called by view to save the patient information
+     * Calls model method to save to csv
+     * @param arrayList ArrayList to be saved to csv
      */
     public void savePatientData(ArrayList<ArrayList<String>> arrayList){
 
         patientDatabase.saveData(arrayList);
 
     }
-
+    
+    /**
+     * Stores the recent login information
+     * @param username Username of the user
+     * @param date Date of the login
+     */
     protected void storeRecentLogin(String username, String date){
 
         loginDatabase.saveRecentLogin(username, date);

@@ -3,7 +3,7 @@
 public class DatabaseController extends DatabaseControllers {
     
     /**
-     * 
+     * Constructor Method for Controller of databases
      */
     public DatabaseController(){
         // initializing databases 

@@ -30,12 +30,12 @@ public class LoginPanel extends JPanel {
     private Color erinBlue = new Color(225, 242, 255);
 
     /**
-     * 
-     * @param constraints
-     * @param row
-     * @param column
-     * @param spanColumn
-     * @param padding
+     * Sets the position of the component
+     * @param constraints Constraints of the container location
+     * @param row int of the row number
+     * @param column int of column number
+     * @param spanColumn int of the number of columns it spans
+     * @param padding padding of the container
      */
     private void setPosition(GridBagConstraints constraints, int row, int column, int spanColumn, Insets padding) { 
 
@@ -47,8 +47,8 @@ public class LoginPanel extends JPanel {
     }
 
     /**
-     * 
-     * @param frame
+     * Login Panel
+     * @param frame frame that is being updated
      */
     public LoginPanel(JFrame frame) {
 
@@ -72,6 +72,7 @@ public class LoginPanel extends JPanel {
             e.printStackTrace();
         }
 
+        // Adding logo 
         JLabel logoContainer = new JLabel(new ImageIcon(logo));
         // layout of logo image
         setPosition(constraints, 0, 0, 3, new Insets(0, 0, 0, 0));
