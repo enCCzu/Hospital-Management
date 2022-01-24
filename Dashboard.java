@@ -24,9 +24,17 @@ public class Dashboard extends JPanel {
         setSize(900, 800);
 
         // Background colour of the panel 
-        Color lightSteelBlue = new Color(225, 242, 255);
+        Color lightSteelBlue = new Color(176, 193, 219);
+        Color erinColor = new Color(230, 236, 255);
 
-        setBackground(lightSteelBlue);
+        // Add Panel for rectangle
+        JPanel rectangle1 = new JPanel();
+        rectangle1.setBounds(225, 350, 725, 300);
+        rectangle1.setBackground(Color.PINK);
+        rectangle1.setLayout(null);
+
+
+        setBackground(erinColor);
 
         // Getting database information for the dashboard 
         DatabaseController databaseController = new DatabaseController();
@@ -55,65 +63,67 @@ public class Dashboard extends JPanel {
         JLabel patientContainer = new JLabel(new ImageIcon(patientIcon));
         //layout
         size = patientContainer.getPreferredSize();
-        patientContainer.setBounds(250, 370, size.width, size.height);
+        patientContainer.setBounds(25, 25, size.width, size.height); //250,370
 
         // Room Icon
         JLabel roomContainer = new JLabel(new ImageIcon(roomsIcon));
         //layout
         size = roomContainer.getPreferredSize();
-        roomContainer.setBounds(650, 370, size.width, size.height);
+        roomContainer.setBounds(450, 25, size.width, size.height);
 
         // Title of the page/panel 
         JLabel title = new JLabel("Dashboard");
         title.setFont(new Font("Verdana", Font.PLAIN, 35));
+        title.setForeground(Color.PINK);
         //layout
         size = title.getPreferredSize();
-        title.setBounds(250, 70, size.width, size.height);
+        title.setBounds(250, 70, size.width + 100, size.height);
 
         // Title of patient area of the dashboard 
         JLabel patientTitle = new JLabel("Patients");
         patientTitle.setFont(new Font("Verdana", Font.PLAIN, 30));
         //layout
-        size = patientTitle.getPreferredSize();
-        patientTitle.setBounds(300, 370, size.width, size.height);
+        size = patientTitle.getMaximumSize();
+        patientTitle.setBounds(75, 25, size.width + 100, size.height); //75,370
 
         // Text showing number of patients 
         JLabel patientNum = new JLabel(patients + " Patients");
         patientNum.setFont(new Font("Verdana", Font.PLAIN, 25));
         //layout
-        size = patientNum.getPreferredSize();
-        patientNum.setBounds(250, 470, size.width, size.height);
+        size = patientNum.getMaximumSize();
+        patientNum.setBounds(75, 125, size.width + 100, size.height);
 
         // Title of room area of the dashboard 
         JLabel roomTitle = new JLabel("Rooms");
         roomTitle.setFont(new Font("Verdana", Font.PLAIN, 30));
         //layout
-        size = roomTitle.getPreferredSize();
-        roomTitle.setBounds(700, 370, size.width, size.height);
+        size = roomTitle.getMaximumSize();
+        roomTitle.setBounds(500, 25, size.width + 100, size.height);
 
         // Text showing the number of rooms 
         JLabel roomNum = new JLabel(rooms + " Rooms");
         roomNum.setFont(new Font("Verdana", Font.PLAIN, 25));
         //layout
-        size = roomNum.getPreferredSize();
-        roomNum.setBounds(650, 470, size.width, size.height);
+        size = roomNum.getMaximumSize();
+        roomNum.setBounds(500, 125, size.width + 100, size.height);
 
         // Text showing total number of available beds 
         JLabel beds = new JLabel("Beds: " + availableBeds + "/" + totalBeds);
         beds.setFont(new Font("Verdana", Font.PLAIN, 25));
         //layout 
-        size = beds.getPreferredSize();
-        beds.setBounds(650, 570, size.width, size.height);
+        size = beds.getMaximumSize();
+        beds.setBounds(500, 225, size.width + 100, size.height);
 
-        // Adding objects to panel 
-        add(patientContainer);
-        add(roomContainer);
+        // Adding objects to panel
+        add(rectangle1);
         add(title);
-        add(patientTitle);
-        add(patientNum);
-        add(roomTitle);
-        add(roomNum);
-        add(beds);
+        rectangle1.add(patientContainer);
+        rectangle1.add(roomContainer);
+        rectangle1.add(patientTitle);
+        rectangle1.add(patientNum);
+        rectangle1.add(roomTitle);
+        rectangle1.add(roomNum);
+        rectangle1.add(beds);
 
     }
 }
