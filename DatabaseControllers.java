@@ -13,15 +13,24 @@ abstract class DatabaseControllers {
     protected PatientDatabase patientDatabase = new PatientDatabase();
     protected RoomDatabase roomDatabase = new RoomDatabase();
 
+    // Stores which user is logged in 
+    protected String loggedInUsername = "";
+
     /**
      * Checks the username and password entered
      * @param userName Username entered
      * @param password Password entered
      * @return boolean true if matches sytem
      */
-    public boolean checkPassword(String userName, String password) {
+    public boolean checkPassword(String username, String password) {
 
-        return credentialsDatabase.checkPassword(userName, password);
+        if (credentialsDatabase.checkPassword(username, password)){
+
+            loggedInUsername = username; 
+
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -93,7 +102,29 @@ abstract class DatabaseControllers {
      */
     protected String getUsername(){
 
-        return credentialsDatabase.getUsername();
+        return loggedInUsername;
+    }
+
+    /**
+     * 
+     * @param arrayList
+     * @return
+     */
+    public String[][] arrayListToArray(ArrayList<ArrayList<String>> arrayList){
+        String[][] array = new String[arrayList.size()][];
+        array = arrayList.stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);
+        System.out.println(array.length);
+        return array;
+    }
+
+    /**
+     * 
+     * @param arrayList
+     */
+    public void savePatientData(ArrayList<ArrayList<String>> arrayList){
+
+        patientDatabase.saveData(arrayList);
+
     }
 
 }
