@@ -47,6 +47,7 @@ public class Room extends JPanel {
     private Color beige = new Color(246, 245, 225);
     private Color unbleachedSilk = new Color(255, 216, 204);
     private Color erinColor = new Color(225, 242, 255);
+    private Color lightPink = new Color(255, 186, 179);
    
     /**
      * Adds all JLabels and JButtons to the panel
@@ -60,7 +61,7 @@ public class Room extends JPanel {
 
         //Top label (title) font and placement
         JLabel titleLabel = new JLabel("<html>"+"Rooms"+"</html>", JLabel.RIGHT);
-        titleLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        titleLabel.setFont(new Font("Verdana", Font.PLAIN, 35));
         titleLabel.setForeground(rosePink);
         //position 
         Dimension size = titleLabel.getPreferredSize();
@@ -102,9 +103,9 @@ public class Room extends JPanel {
 
         // Initializing the JTable
         roomTable.setRowSorter(rowSorter);
-        roomTable.setBounds(250, 75, 900, 600);
+        roomTable.setBounds(250, 75, 800, 600);
         scrollPane = new JScrollPane(roomTable);
-        scrollPane.setBounds(225, 100, 800, 600);
+        scrollPane.setBounds(225, 100, 700, 600);
 
         //Table Color adjustment
         roomTable.setBackground(beige);
@@ -172,6 +173,7 @@ public class Room extends JPanel {
         // Layout
         addRowPopup.setLayout(new BoxLayout(addRowPopup, BoxLayout.PAGE_AXIS));
         addRowPopup.add(Box.createRigidArea(new Dimension(2,2)));
+        addRowPopup.setBackground(lightPink);
 
         // Adding objects to popup (text and textfields)
         addRowPopup.add(new JLabel("Room #"));
@@ -184,6 +186,10 @@ public class Room extends JPanel {
         addRowPopup.add(new JLabel("Type of Room:"));
         addRowPopup.add(roomTypeField);
 
+        //create JPanel for invalid input popup
+        JPanel addErrorPopup = new JPanel();
+        addErrorPopup.add(new JLabel("You have entered an invalid data type in the Room #, Bed #, or Beds Available field."));
+
         //Array to store text 
         String[] storedText = new String[4];
 
@@ -191,24 +197,39 @@ public class Room extends JPanel {
         int result = JOptionPane.showConfirmDialog(null, addRowPopup, "Please enter the room information", JOptionPane.OK_CANCEL_OPTION);
         // If user presses OK
         if (result == JOptionPane.OK_OPTION) {
-            // Get text 
-            storedText[0] = roomNumField.getText();
-            storedText[1] = bedNumField.getText();
-            storedText[2] = bedsAvailField.getText();
-            storedText[3] = roomTypeField.getText();
-            // add row to the model (table)
-            model.addRow(storedText);
+            if(isNumeric(roomNumField.getText()) && isNumeric(bedNumField.getText()) && isNumeric(bedNumField.getText())){
+                // Get text 
+                storedText[0] = roomNumField.getText();
+                storedText[1] = bedNumField.getText();
+                storedText[2] = bedsAvailField.getText();
+                storedText[3] = roomTypeField.getText();
+                // add row to the model (table)
+                model.addRow(storedText);
 
-            // Add row to the arrayList where the data is stored 
-            ArrayList<String> newRow = new ArrayList<String>();
-            for(int i = 0;i < storedText.length; i++){
-                newRow.add(storedText[i]);
+                // Add row to the arrayList where the data is stored 
+                ArrayList<String> newRow = new ArrayList<String>();
+                for(int i = 0;i < storedText.length; i++){
+                    newRow.add(storedText[i]);
+                }
+                roomDataList.add(newRow);
+
+                // Send new data to controller to be saved in the database 
+                controller.saveRoomData(roomDataList);; 
             }
-            roomDataList.add(newRow);
-
-            // Send new data to controller to be saved in the database 
-            controller.saveRoomData(roomDataList);; 
+            else{
+                System.out.println("Invalid");
+                int result2 = JOptionPane.showConfirmDialog(null, addErrorPopup, "Error! Invalid Data Type", JOptionPane.PLAIN_MESSAGE);
+            }
         }
+    }
+
+    /**
+     * Checks to see if the string contains any characters from 0-9 or decimals
+     * @param str
+     * @return
+     */
+    private static boolean isNumeric(String str){
+        return str != null && str.matches("[0-9.]+");
     }
 
     /**
@@ -218,7 +239,7 @@ public class Room extends JPanel {
         deleteButton.addActionListener(new ActionListener(){
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {  
                 int row = roomTable.getSelectedRow();
                 model.removeRow(roomTable.getSelectedRow());
                 roomDataList.remove(row);
@@ -242,17 +263,63 @@ public class Room extends JPanel {
     }
 
     /**
-     * Edits the cell selected and saves it
+     * Creates a new dialog box with all the values of the current row filled in
+     * inside of editable JTextFields and then saves the values of each box once
+     * the user has finished editing
      * @param row row selected
      * @param column column selected
      */
     public void editCell(int row, int column){
-        String cellEdit = JOptionPane.showInputDialog(null, "What should this cell be changed to?");
-        if(cellEdit != null){
-            model.setValueAt(cellEdit, row, column);
-            roomDataList.get(row).set(column, cellEdit);
-            controller.saveRoomData(roomDataList);
+
+
+        JTextField roomNumField = new JTextField(checkForNull(model.getValueAt(row, 0)));
+        JTextField bedNumField = new JTextField(checkForNull(model.getValueAt(row, 1)));
+        JTextField bedsAvailField =new JTextField(checkForNull(model.getValueAt(row, 2)));
+        JTextField roomTypeField = new JTextField(checkForNull(model.getValueAt(row, 3)));
+
+
+        JPanel panel = new JPanel();
+        panel.setBackground(lightPink);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(Box.createRigidArea(new Dimension(2,2)));
+        panel.add(new JLabel("Room #"));
+        panel.add(roomNumField);
+        panel.add(new JLabel("# of Beds"));
+        panel.add(bedNumField);
+        panel.add(Box.createHorizontalStrut(15)); // a spacer
+        panel.add(new JLabel("Beds Available:"));
+        panel.add(bedsAvailField);
+        panel.add(new JLabel("Type of Room:"));
+        panel.add(roomTypeField);
+
+        //create JPanel for invalid input popup
+        JPanel addErrorPopup = new JPanel();
+        addErrorPopup.add(new JLabel("You have entered an invalid data type in the Room #, # of Beds, or Beds Available field."));
+
+        String[] cellEdit = new String[4];
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Editing Row: " + (row +1), JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            if(isNumeric(roomNumField.getText()) && isNumeric(bedNumField.getText()) && isNumeric(bedsAvailField.getText())){
+                cellEdit[0] = roomNumField.getText();
+                cellEdit[1] = bedNumField.getText();
+                cellEdit[2] = bedsAvailField.getText();
+                cellEdit[3] = roomTypeField.getText();
+                // add row to the model
+
+                for(int i = 0;i < cellEdit.length; i++){
+                    model.setValueAt(cellEdit[i], row, i);
+                    roomDataList.get(row).set(i, cellEdit[i]);
+                }
+
+                controller.roomDatabase.arrayListToCSV(roomDataList, "Room_List.csv");
+            }
+            else{
+                System.out.println("Invalid");
+                int result2 = JOptionPane.showConfirmDialog(null, addErrorPopup, "Error! Invalid Data Type", JOptionPane.PLAIN_MESSAGE);
+            }
         }
+        
         
     }
 
@@ -280,7 +347,8 @@ public class Room extends JPanel {
     }
 
     /**
-     * 
+     * If the object has a value it is converted to a string otherwise a blank string is returned
+     * in order to avoid NullPointerExceptions
      * @param valueAt
      * @return
      */

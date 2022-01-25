@@ -52,6 +52,7 @@ public class Patient extends JPanel {
     private Color beige = new Color(246, 245, 225);
     private Color unbleachedSilk = new Color(255, 216, 204);
     private Color erinColor = new Color(225, 242, 255);
+    private Color lightPink = new Color(255, 186, 179);
 
 
     /**
@@ -79,6 +80,9 @@ public class Patient extends JPanel {
 
             BufferedImage minusImage = ImageIO.read(getClass().getResource("Images/minus.png"));
             deleteButton.setIcon(new ImageIcon(minusImage));
+
+            BufferedImage arrowImage = ImageIO.read(getClass().getResource("Images/Arrow.png"));
+            arrowButton.setIcon(new ImageIcon(arrowImage));
         } catch (Exception e) {
 
             System.out.println("Images required. Please do not steal the images.");
@@ -105,6 +109,16 @@ public class Patient extends JPanel {
         // to remove the border
         addButton.setBorder(null);
 
+        //Arrow button and placement
+        size = arrowButton.getPreferredSize();
+        arrowButton.setBounds(325, 705, 30, 30);
+        // to remote the spacing between the image and button's borders
+        arrowButton.setMargin(new Insets(0, 0, 0, 0));
+        // to add a different background
+        arrowButton.setBackground(Color.WHITE);
+        // to remove the border
+        arrowButton.setBorder(null);
+
         // JTable filter
         jtfFilter.setBounds(225,75,200,20);
         
@@ -123,13 +137,14 @@ public class Patient extends JPanel {
         add(titleLabel);
         add(deleteButton);
         add(addButton);
+        add(arrowButton);
         add(scrollPane);
         add(jtfFilter);
         
     }
 
     /**
-     * 
+     * Adds search functionality to the JTable by sorting using the text entered by the user in the JTextField
      * @param jtfFilter
      */
     public void createTableFilter(JTextField jtfFilter){
@@ -180,6 +195,7 @@ public class Patient extends JPanel {
 
         // Objects within the popup 
         JPanel addRowPopup = new JPanel();
+        addRowPopup.setBackground(lightPink);
         // Layout
         addRowPopup.setLayout(new BoxLayout(addRowPopup, BoxLayout.PAGE_AXIS));
         addRowPopup.add(Box.createRigidArea(new Dimension(2,2)));
@@ -197,32 +213,54 @@ public class Patient extends JPanel {
         addRowPopup.add(new JLabel("Description"));
         addRowPopup.add(descriptionField);
 
+        //create JPanel for invalid input popup
+        JPanel addErrorPopup = new JPanel();
+        addErrorPopup.add(new JLabel("You have entered an invalid data type in the Age field"));
+
         //Array to store text 
         String[] storedText = new String[5];
 
         // Creating popup container
         int result = JOptionPane.showConfirmDialog(null, addRowPopup, "Please enter the patient's information", JOptionPane.OK_CANCEL_OPTION);
+        
+
         // If user presses OK 
         if (result == JOptionPane.OK_OPTION) {
-            // Get text 
-            storedText[0] = healthCardField.getText();
-            storedText[1] = nameField.getText();
-            storedText[2] = ageField.getText();
-            storedText[3] = diagnosisField.getText();
-            storedText[4] = descriptionField.getText();
-            // add row to the model (table)
-            model.addRow(storedText);
+            if(isNumeric(ageField.getText())){
+                // Get text and fix any null values
+                storedText[0] = checkForNull(healthCardField.getText());
+                storedText[1] = checkForNull(nameField.getText());
+                storedText[2] = checkForNull(ageField.getText());
+                storedText[3] = checkForNull(diagnosisField.getText());
+                storedText[4] = checkForNull(descriptionField.getText());
+                // add row to the model (table)
+                model.addRow(storedText);
 
-            // Add row to the arrayList where the data is stored 
-            ArrayList<String> newRow = new ArrayList<String>();
-            for(int i = 0;i < storedText.length; i++){
-                newRow.add(storedText[i]);
+                // Add row to the arrayList where the data is stored 
+                ArrayList<String> newRow = new ArrayList<String>();
+                for(int i = 0;i < storedText.length; i++){
+                    newRow.add(storedText[i]);
+                }
+                patientDataList.add(newRow);
+
+                // Send new data to controller to be saved in the database 
+                controller.savePatientData(patientDataList);
             }
-            patientDataList.add(newRow);
-
-            // Send new data to controller to be saved in the database 
-            controller.savePatientData(patientDataList);
+            else{
+                System.out.println("Invalid");
+                int result2 = JOptionPane.showConfirmDialog(null, addErrorPopup, "Error! Invalid Data Type", JOptionPane.PLAIN_MESSAGE);
+            }
+            
         }
+    }
+
+    /**
+     * Checks to see if the string contains any characters from 0-9 or decimals
+     * @param str
+     * @return
+     */
+    private static boolean isNumeric(String str){
+        return str != null && str.matches("[0-9.]+");
     }
 
     /**
@@ -236,7 +274,8 @@ public class Patient extends JPanel {
                 int row = patientTable.getSelectedRow();
                 model.removeRow(patientTable.getSelectedRow());
                 patientDataList.remove(row);
-                controller.patientDatabase.arrayListToCSV(patientDataList, "Patient_List.csv");
+                // Send new data to controller to be saved in the database 
+                controller.savePatientData(patientDataList);
 
                 
             }
@@ -252,6 +291,17 @@ public class Patient extends JPanel {
             }
 
         });
+
+        arrowButton.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = patientTable.getSelectedRow();
+                if(row >= 0){
+                new PatientInfoPopup(row, model);
+                }
+            }
+        });
     }
 
     /**
@@ -259,14 +309,63 @@ public class Patient extends JPanel {
      * @param row row selected
      * @param column column selected
      */
-    public void editCell(int row, int column){
-        String cellEdit = JOptionPane.showInputDialog(null, "What should this cell be changed to?");
-        if(cellEdit != null){
-            model.setValueAt(cellEdit, row, column);
-            patientDataList.get(row).set(column, cellEdit);
-            controller.savePatientData(patientDataList);;
+    public void editCell(int row){
+
+
+        JTextField healthCardField = new JTextField(checkForNull(model.getValueAt(row, 0)));
+        JTextField nameField = new JTextField(checkForNull(model.getValueAt(row, 1)));
+        JTextField ageField = new JTextField(checkForNull(model.getValueAt(row, 2)));
+        JTextField diagnosisField = new JTextField(checkForNull(model.getValueAt(row, 3)));
+        JTextField descriptionField = new JTextField(checkForNull(model.getValueAt(row, 4)));
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setBackground(lightPink);
+        panel.add(Box.createRigidArea(new Dimension(2,2)));
+        panel.add(new JLabel("Patient Health Card:"));
+        panel.add(healthCardField);
+        panel.add(new JLabel("Patient Name:"));
+        panel.add(nameField);
+        panel.add(Box.createHorizontalStrut(15)); // a spacer
+        panel.add(new JLabel("Patient Age:"));
+        panel.add(ageField);
+        panel.add(new JLabel("Diagnosis:"));
+        panel.add(diagnosisField);
+        panel.add(new JLabel("Description"));
+        panel.add(descriptionField);
+
+        //create JPanel for invalid input popup
+        JPanel addErrorPopup = new JPanel();
+        addErrorPopup.add(new JLabel("You have entered an invalid data type in the Age field"));
+
+        String[] cellEdit = new String[5];
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Editing Row: " + (row + 1), JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            if(isNumeric(ageField.getText())){
+                cellEdit[0] = healthCardField.getText();
+                cellEdit[1] = nameField.getText();
+                cellEdit[2] = ageField.getText();
+                cellEdit[3] = diagnosisField.getText();
+                cellEdit[4] = descriptionField.getText();
+                // add row to the model
+
+                for(int i = 0;i < cellEdit.length; i++){
+                    cellEdit[i] = checkForNull(cellEdit[i]);
+                    model.setValueAt(cellEdit[i], row, i);
+                    System.out.println(i);
+                    System.out.println(cellEdit.length);
+                    System.out.println(patientDataList.get(row));
+                    patientDataList.get(row).set(i,cellEdit[i]);
+                }
+                // Send new data to controller to be saved in the database 
+                controller.savePatientData(patientDataList);    
+            }
+            else{
+                System.out.println("Invalid");
+                int result2 = JOptionPane.showConfirmDialog(null, addErrorPopup, "Error! Invalid Data Type", JOptionPane.PLAIN_MESSAGE);
+            }
         }
-        
     }
 
     /**
@@ -283,7 +382,7 @@ public class Patient extends JPanel {
                     int row = target.getSelectedRow();
                     int column = target.getSelectedColumn();
 
-                    editCell(row,column);
+                    editCell(row);
                }
             }
           });
@@ -308,6 +407,15 @@ public class Patient extends JPanel {
         createCellListener(patientTable);
         createButtonListener();
 
+    }
+
+    private String checkForNull(Object valueAt) {
+        String stringValue;
+        if(valueAt != null){
+            stringValue = valueAt.toString();
+            return stringValue;
+        }
+        return "";
     }
 
 }
