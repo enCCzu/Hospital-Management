@@ -343,11 +343,12 @@ public class Patient extends JPanel {
         int result = JOptionPane.showConfirmDialog(null, panel, "Editing Row: " + (row + 1), JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             if(isNumeric(ageField.getText())){
-                cellEdit[0] = healthCardField.getText();
-                cellEdit[1] = nameField.getText();
-                cellEdit[2] = ageField.getText();
-                cellEdit[3] = diagnosisField.getText();
-                cellEdit[4] = descriptionField.getText();
+
+                cellEdit[0] = checkForNull(healthCardField.getText());
+                cellEdit[1] = checkForNull(nameField.getText());
+                cellEdit[2] = checkForNull(ageField.getText());
+                cellEdit[3] = checkForNull(diagnosisField.getText());
+                cellEdit[4] = checkForNull(descriptionField.getText());
                 // add row to the model
 
                 for(int i = 0;i < cellEdit.length; i++){
