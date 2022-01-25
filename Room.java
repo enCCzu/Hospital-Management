@@ -199,10 +199,10 @@ public class Room extends JPanel {
         if (result == JOptionPane.OK_OPTION) {
             if(isNumeric(roomNumField.getText()) && isNumeric(bedNumField.getText()) && isNumeric(bedNumField.getText())){
                 // Get text 
-                storedText[0] = roomNumField.getText();
-                storedText[1] = bedNumField.getText();
-                storedText[2] = bedsAvailField.getText();
-                storedText[3] = roomTypeField.getText();
+                storedText[0] = checkForNull(roomNumField.getText());
+                storedText[1] = checkForNull(bedNumField.getText());
+                storedText[2] = checkForNull(bedsAvailField.getText());
+                storedText[3] = checkForNull(roomTypeField.getText());
                 // add row to the model (table)
                 model.addRow(storedText);
 
@@ -301,10 +301,10 @@ public class Room extends JPanel {
         int result = JOptionPane.showConfirmDialog(null, panel, "Editing Row: " + (row +1), JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             if(isNumeric(roomNumField.getText()) && isNumeric(bedNumField.getText()) && isNumeric(bedsAvailField.getText())){
-                cellEdit[0] = roomNumField.getText();
-                cellEdit[1] = bedNumField.getText();
-                cellEdit[2] = bedsAvailField.getText();
-                cellEdit[3] = roomTypeField.getText();
+                cellEdit[0] = checkForNull(roomNumField.getText());
+                cellEdit[1] = checkForNull(bedNumField.getText());
+                cellEdit[2] = checkForNull(bedsAvailField.getText());
+                cellEdit[3] = checkForNull(roomTypeField.getText());
                 // add row to the model
 
                 for(int i = 0;i < cellEdit.length; i++){
